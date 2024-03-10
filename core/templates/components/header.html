@@ -1,4 +1,4 @@
-{% extends 'components/base.html' %} {% block header %}
+{% extends 'components/base.html' %} {% load static %} {% block header %}
 <header class="header-area header-sticky text-center header-default">
   <div class="header-main-sticky">
     <div class="header-nav">
@@ -28,8 +28,12 @@
             class="header-middle float-lg-left float-md-left float-sm-left float-xs-none"
           >
             <div class="logo">
-              <a href="index.html"
-                ><img src="img/logos/logo.png" alt="NatureCircle"
+              <a href="{% url 'index' %}"
+                ><img
+                  src="{% static 'img/logo/logo.png' %}"
+                  width="50px"
+                  height="50px"
+                  alt="NatureCircle"
               /></a>
             </div>
           </div>
@@ -93,7 +97,7 @@
             </div>
             <div class="cart-wrapper">
               <button type="button" class="btn">
-                <i class="material-icons">shopping_cart</i>
+                <i class="material-icons">shelves</i>
                 <span class="ttcount">2</span>
               </button>
               <div id="cart-dropdown" class="cart-menu">
@@ -105,16 +109,15 @@
                           <td class="text-center">
                             <a href="#"
                               ><img
-                                src="img/products/01.jpg"
+                                src="{% static 'img/books/cover1.png' %}"
                                 alt="01"
                                 title="01"
                             /></a>
                           </td>
                           <td class="text-left product-name">
-                            <a href="#">aliquam quaerat voluptatem</a>
+                            <a href="#">A Clash of Kings</a>
                             <div class="quantity float-left w-100">
-                              <span class="cart-qty">1 × </span>
-                              <span class="text-left price"> $20.00</span>
+                              <span class="cart-qty">George R.R martin</span>
                             </div>
                           </td>
                           <td class="text-center close">
@@ -130,8 +133,10 @@
                     <table class="table price mb-30">
                       <tbody>
                         <tr>
-                          <td class="text-left"><strong>Total</strong></td>
-                          <td class="text-right"><strong>$2,122.00</strong></td>
+                          <td class="text-left">
+                            <strong>Available shelves</strong>
+                          </td>
+                          <td class="text-right"><strong>1</strong></td>
                         </tr>
                       </tbody>
                     </table>
@@ -140,14 +145,14 @@
                     <form action="cart_page.html">
                       <input
                         class="btn pull-left mt_10 btn-primary btn-rounded w-100"
-                        value="View cart"
+                        value="View Shelf"
                         type="submit"
                       />
                     </form>
                     <form action="checkout_page.html">
                       <input
                         class="btn pull-right mt_10 btn-primary btn-rounded w-100"
-                        value="Checkout"
+                        value="Borrow"
                         type="submit"
                       />
                     </form>

@@ -1,0 +1,20 @@
+{% extends "components/footer.html" %}
+{% block class %}{% endblock %}
+{% load static %} {% block main %}
+<nav aria-label="breadcrumb" class="w-100 float-left">
+  <ol
+    class="breadcrumb parallax justify-content-center"
+    data-source-url="{% static 'img/shelf/shelf.jpg' %}"
+    style="
+      background-image: url("{% static 'img/shelf/shelf.jpg' %}");
+      background-position: 50% 0.809717%;
+    "
+  >
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{% block current %}{% endblock %}</li>
+  </ol>
+</nav>
+{% block rest %}
+
+{% endblock %}
+{% endblock %}

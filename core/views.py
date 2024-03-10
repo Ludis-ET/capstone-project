@@ -1,4 +1,8 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, "pages/Home.html",{})
+    return render(request, "pages/Home/home.html",{})
+
+
+def shelf(request):
+    return render(request, "pages/Shelf/shelf.html",{})

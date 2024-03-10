@@ -1,0 +1,38 @@
+{% extends "components/footer.html" %} {% load static %} {% block main %}
+<main>
+  <div class="slider-wrapper mb-40 my-sm-25 float-left w-100">
+    <div class="slider slider-for owl-carousel">
+      <div>
+        <a href="#">
+          <img src="{% static 'img/books/slider2.jpg' %}" alt="" />
+        </a>
+        <div class="slider-content-wrap center effect_top">
+          <div class="slider-title mb-20 text-capitalize float-left w-100">
+            our specials
+          </div>
+          <div class="slider-subtitle mb-50 text-capitalize float-left w-100">
+            Latest Books
+          </div>
+          <div class="slider-button text-uppercase float-left w-100">
+            <a href=" #">go to shelf</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a href="#">
+          <img src="{% static 'img/books/slider1.jpg' %}" alt="" />
+        </a>
+        <div class="slider-content-wrap center effect_bottom">
+          <div class="slider-title mb-20 text-capitalize float-left w-100">
+            Time is running
+          </div>
+          <div class="slider-button text-uppercase float-left w-100">
+            <a href=" #">Go to shelf</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% block trending %} {% endblock %}
+</main>
+{% endblock %}

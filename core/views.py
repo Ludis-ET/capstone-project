@@ -5,4 +5,4 @@ def index(request):
 
 
 def shelf(request):
-    return render(request, "components/link.html",{})
+    return render(request, "pages/shelf/shelf.html",{})

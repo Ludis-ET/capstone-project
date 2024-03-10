@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Djabook - book store</title>
+
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,900"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/bootstrap/core/css/bootstrap.css' %}"
+      rel="stylesheet"
+    />
+    <link href="{% static 'core/css/styles.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/animate.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/owl-carousel.css' %}" rel="stylesheet" />
+    <link href="{% static 'core/css/lightbox.css' %}" rel="stylesheet" />
+  </head>
+
+  <body class="index layout3">
+    {% block body %} {% endblock %}
+
+    <script src="{% static 'core/js/jquery.min.js' %}"></script>
+    <script src="{% static 'core/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'core/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'core/js/custom.js' %}"></script>
+    <script src="{% static 'core/js/parallax.js' %}"></script>
+    <script src="{% static 'core/js/lightbox-2.6.min.js' %}"></script>
+    <script src="{% static 'core/js/ResizeSensor.min.js' %}"></script>
+    <script src="{% static 'core/js/theia-sticky-sidebar.min.js' %}"></script>
+    <script src="{% static 'core/js/inview.js' %}"></script>
+    <script src="{% static 'core/js/cookiealert.js' %}"></script>
+    <script src="{% static 'core/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'core/js/masonry.pkgd.min.js' %}"></script>
+    <script src="{% static 'core/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'core/js/jquery.zoom.min.js' %}"></script>
+  </body>
+</html>

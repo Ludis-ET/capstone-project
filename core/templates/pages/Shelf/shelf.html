@@ -61,7 +61,6 @@
                   <select name="sort" id="sort">
                     <option value="position">Default sorting</option>
                     <option value="p-name">Sort Popularity</option>
-                    <option value="p-price">Sort Price</option>
                   </select>
                 </div>
               </div>
@@ -257,10 +256,6 @@
                           ><i class="material-icons">favorite</i
                           ><span>wishlist</span></a
                         >
-                        <button type="button" class="btn btn-primary btn-compare">
-                          <i class="material-icons">equalizer</i
-                          ><span>Compare</span>
-                        </button>
                         <button
                           type="button"
                           class="btn btn-primary btn-quickview"
@@ -313,7 +308,7 @@
                   aria-expanded="false"
                   aria-controls="sidebar-main"
                   class="d-lg-none block-toggler"
-                  >Product Categories</a
+                  >Genre</a
                 >
               </div>
               <div id="sidebar-main" class="sidebar-main collapse">
@@ -325,31 +320,17 @@
                       role="button"
                       aria-expanded="true"
                       aria-controls="categoriesMenu"
-                      >Categories</a
+                      >Genre</a
                     >
                   </h3>
                   <div id="categoriesMenu" class="expand-lg collapse show">
                     <div class="nav nav-pills flex-column mt-4">
                       <a
                         href="#"
-                        class="nav-link d-flex justify-content-between mb-2"
-                        ><span>Jackets</span
-                        ><span class="sidebar-badge"> 120</span></a
-                      >
-                      <div class="nav nav-pills flex-column ml-3">
-                        <a href="#" class="nav-link mb-2">Lorem ipsum</a>
-                        <a href="#" class="nav-link mb-2">Donec vitae</a>
-                      </div>
-                      <a
-                        href="#"
                         class="nav-link d-flex justify-content-between mb-2 active"
-                        ><span>Jeans &amp; chinos</span
+                        ><span>Scifi</span
                         ><span class="sidebar-badge"> 55</span></a
                       >
-                      <div class="nav nav-pills flex-column ml-3">
-                        <a href="#" class="nav-link mb-2">Dolor</a>
-                        <a href="#" class="nav-link mb-2">Sit amet</a>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -361,19 +342,24 @@
                       role="button"
                       aria-expanded="true"
                       aria-controls="price"
-                      >Price</a
+                      >Availability</a
                     >
                   </h3>
                   <div id="price" class="collapse show">
                     <div class="price-inner">
                       <label for="amount">Price range:</label>
-                      <input
-                        type="text"
+                      Available <input
+                        type="radio"
                         id="amount"
                         readonly
                         style="border: 0; font-weight: bold; background: none"
                       />
-                      <div id="slider-range"></div>
+                      Not Available <input
+                        type="radio"
+                        id="amount"
+                        readonly
+                        style="border: 0; font-weight: bold; background: none"
+                      />
                     </div>
                   </div>
                 </div>
@@ -385,385 +371,29 @@
                       role="button"
                       aria-expanded="true"
                       aria-controls="color"
-                      >Color</a
+                      >Rating</a
                     >
                   </h3>
-                  <div
-                    id="color"
-                    class="sidebar-widget-option-wrapper collapse show"
-                  >
-                    <div class="color-inner">
-                      <div class="sidebar-widget-option">
-                        <a href="#" style="background-color: #000000"></a>
-                        Black <span>(4)</span>
-                      </div>
-                      <div class="sidebar-widget-option">
-                        <a href="#" style="background-color: #11426b"></a>
-                        Blue <span>(3)</span>
-                      </div>
-                      <div class="sidebar-widget-option">
-                        <a href="#" style="background-color: #7d5a3c"></a>
-                        Brown <span>(3)</span>
-                      </div>
-                      <div class="sidebar-widget-option">
-                        <a href="#" style="background-color: #ffffff"></a>
-                        White <span>(3)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="sidebar-block size">
-                  <h3 class="widget-title">
-                    <a
-                      data-toggle="collapse"
-                      href="#size"
-                      role="button"
-                      aria-expanded="true"
-                      aria-controls="size"
-                      >Size</a
-                    >
-                  </h3>
-                  <div
-                    id="size"
-                    class="sidebar-widget-option-wrapper collapse show"
-                  >
-                    <div class="size-inner">
-                      <div class="sidebar-widget-option">
-                        <input type="checkbox" id="size-1" />
-                        <label for="size-1">L <span>(4)</span></label>
-                      </div>
-                      <div class="sidebar-widget-option">
-                        <input type="checkbox" id="size-2" />
-                        <label for="size-2">XS <span>(3)</span></label>
-                      </div>
-                      <div class="sidebar-widget-option">
-                        <input type="checkbox" id="size-3" />
-                        <label for="size-3">S <span>(3)</span></label>
-                      </div>
-                      <div class="sidebar-widget-option">
-                        <input type="checkbox" id="size-4" />
-                        <label for="size-4">Xl <span>(3)</span></label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="sidebar-left-banner left-sidebar w-100 float-left">
-              <div class="ttleftbanner">
-                <a href="#">
-                  <img src="img/banner/left-banner.jpg" alt="left-banner" />
-                </a>
-              </div>
-            </div>
-            <div class="sidebar-product left-sidebar w-100 float-left">
-              <div class="title">
-                <a
-                  data-toggle="collapse"
-                  href="#sidebar-product"
-                  aria-expanded="false"
-                  aria-controls="sidebar-product"
-                  class="d-lg-none block-toggler"
-                  >sale products</a
-                >
-              </div>
-              <div id="sidebar-product" class="collapse w-100 float-left">
-                <div class="sidebar-block sale">
-                  <h3 class="widget-title text-capitalize">sale products</h3>
-                  <div class="products owl-carousel">
-                    <div class="sale-col">
-                      <div class="product-layouts">
-                        <div class="product-thumb">
-                          <div class="image col-sm-4 float-left">
-                            <a href="#">
-                              <img src="img/products/01.jpg" alt="01" />
-                            </a>
-                          </div>
-                          <div
-                            class="thumb-description col-sm-8 text-left float-left"
-                          >
-                            <div class="caption">
-                              <h4 class="product-title text-capitalize">
-                                <a href="product-details.html"
-                                  >aliquam quaerat voluptatem</a
-                                >
-                              </h4>
-                            </div>
-                            <div class="rating">
-                              <div
-                                class="product-ratings d-inline-block align-middle"
-                              >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                              </div>
-                            </div>
-                            <div class="price">
-                              <div class="regular-price">$100.00</div>
-                              <div class="old-price">$150.00</div>
-                            </div>
-                            <div class="button-wrapper">
-                              <div class="button-group text-center">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary btn-cart"
-                                  data-target="#cart-pop"
-                                  data-toggle="modal"
-                                >
-                                  <i class="material-icons">shopping_cart</i
-                                  ><span>Add to cart</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="product-layouts">
-                        <div class="product-thumb">
-                          <div class="image col-sm-4 float-left">
-                            <a href="#">
-                              <img src="img/products/02.jpg" alt="01" />
-                            </a>
-                          </div>
-                          <div
-                            class="thumb-description col-sm-8 text-left float-left"
-                          >
-                            <div class="caption">
-                              <h4 class="product-title text-capitalize">
-                                <a href="product-details.html"
-                                  >aspetur autodit autfugit</a
-                                >
-                              </h4>
-                            </div>
-                            <div class="rating">
-                              <div
-                                class="product-ratings d-inline-block align-middle"
-                              >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                              </div>
-                            </div>
-                            <div class="price">
-                              <div class="regular-price">$100.00</div>
-                              <div class="old-price">$150.00</div>
-                            </div>
-                            <div class="button-wrapper">
-                              <div class="button-group text-center">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary btn-cart"
-                                  data-target="#cart-pop"
-                                  data-toggle="modal"
-                                >
-                                  <i class="material-icons">shopping_cart</i
-                                  ><span>Add to cart</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="product-layouts">
-                        <div class="product-thumb">
-                          <div class="image col-sm-4 float-left">
-                            <a href="#">
-                              <img src="img/products/03.jpg" alt="03" />
-                            </a>
-                          </div>
-                          <div
-                            class="thumb-description col-sm-8 text-left float-left"
-                          >
-                            <div class="caption">
-                              <h4 class="product-title text-capitalize">
-                                <a href="product-details.html"
-                                  >magni dolores eosquies</a
-                                >
-                              </h4>
-                            </div>
-                            <div class="rating">
-                              <div
-                                class="product-ratings d-inline-block align-middle"
-                              >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                              </div>
-                            </div>
-                            <div class="price">
-                              <div class="regular-price">$100.00</div>
-                              <div class="old-price">$150.00</div>
-                            </div>
-                            <div class="button-wrapper">
-                              <div class="button-group text-center">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary btn-cart"
-                                  data-target="#cart-pop"
-                                  data-toggle="modal"
-                                >
-                                  <i class="material-icons">shopping_cart</i
-                                  ><span>Add to cart</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="sale-col">
-                      <div class="product-layouts">
-                        <div class="product-thumb">
-                          <div class="image col-sm-4 float-left">
-                            <a href="#">
-                              <img src="img/products/04.jpg" alt="04" />
-                            </a>
-                          </div>
-                          <div
-                            class="thumb-description col-sm-8 text-left float-left"
-                          >
-                            <div class="caption">
-                              <h4 class="product-title text-capitalize">
-                                <a href="product-details.html"
-                                  >voluptas nulla pariatur</a
-                                >
-                              </h4>
-                            </div>
-                            <div class="rating">
-                              <div
-                                class="product-ratings d-inline-block align-middle"
-                              >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                              </div>
-                            </div>
-                            <div class="price">
-                              <div class="regular-price">$100.00</div>
-                              <div class="old-price">$150.00</div>
-                            </div>
-                            <div class="button-wrapper">
-                              <div class="button-group text-center">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary btn-cart"
-                                  data-target="#cart-pop"
-                                  data-toggle="modal"
-                                >
-                                  <i class="material-icons">shopping_cart</i
-                                  ><span>Add to cart</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="product-layouts">
-                        <div class="product-thumb">
-                          <div class="image col-sm-4 float-left">
-                            <a href="#">
-                              <img src="img/products/05.jpg" alt="05" />
-                            </a>
-                          </div>
-                          <div
-                            class="thumb-description col-sm-8 text-left float-left"
-                          >
-                            <div class="caption">
-                              <h4 class="product-title text-capitalize">
-                                <a href="product-details.html"
-                                  >aliquam quat voluptatem</a
-                                >
-                              </h4>
-                            </div>
-                            <div class="rating">
-                              <div
-                                class="product-ratings d-inline-block align-middle"
-                              >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                                <span class="fa fa-stack"
-                                  ><i class="material-icons off">star</i></span
-                                >
-                              </div>
-                            </div>
-                            <div class="price">
-                              <div class="regular-price">$100.00</div>
-                              <div class="old-price">$150.00</div>
-                            </div>
-                            <div class="button-wrapper">
-                              <div class="button-group text-center">
-                                <button
-                                  type="button"
-                                  class="btn btn-primary btn-cart"
-                                  data-target="#cart-pop"
-                                  data-toggle="modal"
-                                >
-                                  <i class="material-icons">shopping_cart</i
-                                  ><span>Add to cart</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                  <div id="price" class="collapse show">
+                    <div class="price-inner">
+                      4 and above <input
+                        type="radio"
+                        id="amount"
+                        readonly
+                        style="border: 0; font-weight: bold; background: none"
+                      /> <br>
+                      3 and above <input
+                        type="radio"
+                        id="amount"
+                        readonly
+                        style="border: 0; font-weight: bold; background: none"
+                      /> <br>
+                      2 and above <input
+                        type="radio"
+                        id="amount"
+                        readonly
+                        style="border: 0; font-weight: bold; background: none"
+                      />
                     </div>
                   </div>
                 </div>

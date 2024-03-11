@@ -7,3 +7,7 @@ def profile(request,username):
 
 def wishlist(request,username):
     return render(request, "pages/user/wishlist.html",{"username":username})
+
+
+def she(request,username):
+    return render(request, "pages/user/wishlist.html",{"username":username})

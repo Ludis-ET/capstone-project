@@ -162,6 +162,39 @@
           </div>
         </div>
       </div>
+      <div class="menu">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light d-sm-none d-xs-none d-lg-block navbar-full">
+        
+        <!-- Navbar brand -->
+        <a class="navbar-brand text-uppercase d-none" href="#">Djabooks</a>
+        
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2"
+        aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>		</button>
+        
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse">
+        
+        <!-- Links -->
+        <ul class="navbar-nav m-auto justify-content-center">
+        <li class="nav-item dropdown active">
+        <a class="nav-link text-uppercase" href="{% url 'index' %}">
+          Home
+        </a>
+        </li>
+        <li class="nav-item dropdown active">
+        <a class="nav-link text-uppercase" href="{% url 'shelf' %}">
+          Shelf
+        </a>
+        </li>
+        </ul>
+        <!-- Links -->
+        </div>
+        <!-- Collapsible content -->
+        </nav>
+      </div>
   </div>
 </header>
 

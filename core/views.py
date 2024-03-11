@@ -6,3 +6,7 @@ def index(request):
 
 def shelf(request):
     return render(request, "pages/shelf/shelf.html",{})
+
+
+def book(request,id):
+    return render(request, "pages/shelf/shelf.html",{})

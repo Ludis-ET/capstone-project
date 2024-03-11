@@ -9,4 +9,4 @@ def shelf(request):
 
 
 def book(request,id):
-    return render(request, "pages/shelf/shelf.html",{})
+    return render(request, "pages/shelf/BookDetail.html",{})

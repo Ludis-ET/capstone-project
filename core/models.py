@@ -34,4 +34,13 @@ class Book(models.Model):
         max_size = 50 * 1024 * 1024 
         if self.book.size > max_size:
             raise ValidationError("Book size should be less than or equal to 50MB.")
+        
+    @property
+    def average_rating(self):
+        reviews = self.review_set.all()
+        if reviews:
+            total_ratings = sum(review.rating for review in reviews)
+            return total_ratings / len(reviews)
+        else:
+            return 0
 

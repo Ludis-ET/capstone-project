@@ -11,6 +11,7 @@ class Profile(models.Model):
 class Shelf(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     books = models.ManyToManyField('core.Book', related_name='shelves')
+    added_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username}'s Shelf"
@@ -18,6 +19,7 @@ class Shelf(models.Model):
 class Wishlist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     books = models.ManyToManyField('core.Book', related_name='wishlists')
+    added_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username}'s Wishlist"

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator
 
 class Genre(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -46,3 +47,11 @@ class Book(models.Model):
         else:
             return 0
 
+class Review(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)])
+    comment = models.TextField()
+
+    def __str__(self):
+        return f"Review by {self.user.username} for {self.book.title}"

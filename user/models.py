@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Add any additional user profile fields you may need
 
     def __str__(self):
         return self.user.username

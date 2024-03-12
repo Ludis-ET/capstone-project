@@ -20,6 +20,8 @@ class Book(models.Model):
         ('borrowed', 'Borrowed'),
     )
     status = models.CharField(max_length=20, choices=status_choices, default='available')
+    date_published = models.DateField(auto_now_add=True)
+    date_updated = models.DateField(auto_now=True)
 
     class Meta:
         unique_together = ("title", "author")

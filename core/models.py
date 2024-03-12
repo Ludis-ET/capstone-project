@@ -2,10 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+class Genre(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Book(models.Model):
     title = models.CharField(max_length = 200)
     author = models.ForeignKey(User,on_delete = models.PROTECT)
-    genre = models.CharField(max_length=100)
+    genres = models.ManyToManyField(Genre)
     book = models.FileField(upload_to='books/')
     description = models.TextField()
     history = models.PositiveIntegerField(default = 0)
@@ -28,15 +34,4 @@ class Book(models.Model):
         max_size = 50 * 1024 * 1024 
         if self.book.size > max_size:
             raise ValidationError("Book size should be less than or equal to 50MB.")
-    
-class Reveiw(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.IntegerField()
-    comment = models.TextField()
-
-    def clean(self):
-        if self.book.status != 'borrowed' or self.user not in self.book.borrowed_by.all():
-            raise ValidationError("You can only review books that you have borrowed.")
-
 

@@ -4,4 +4,5 @@ from .models import *
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     exclude = ('history',)
-# admin.site.register(Reveiw)
+    
+admin.site.register(Review)

@@ -15,7 +15,7 @@ class Book(models.Model):
     genres = models.ManyToManyField(Genre)
     book = models.FileField(upload_to='books/')
     description = models.TextField()
-    history = models.PositiveIntegerField(default = 0)
+    history = models.ManyToManyField(User, related_name='borrowed_books')
     status_choices = (
         ('available', 'Available'),
         ('borrowed', 'Borrowed'),
@@ -53,5 +53,12 @@ class Review(models.Model):
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)])
     comment = models.TextField()
 
+    class Meta:
+        unique_together = ("book", "user")
+
     def __str__(self):
         return f"Review by {self.user.username} for {self.book.title}"
+
+    def clean(self):
+        if self.user not in self.book.history.all():
+            raise ValidationError("You can only review books that you have borrowed.")

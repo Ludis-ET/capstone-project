@@ -27,3 +27,10 @@
     background-color: #333;
     color:#fff;
 }
+
+.badge{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:4px;
+}

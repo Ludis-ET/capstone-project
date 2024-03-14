@@ -9,9 +9,6 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
-    
-    class Meta:
-        verbose_name_plural = 'Genre List'
 
 class Book(models.Model):
     title = models.CharField(max_length = 200)
@@ -31,7 +28,6 @@ class Book(models.Model):
 
     class Meta:
         unique_together = ("title", "author")
-        verbose_name_plural = 'Book List'
     
     def __str__(self):
         return f'{self.title} book by {self.author.first_name}'

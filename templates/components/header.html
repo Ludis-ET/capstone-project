@@ -14,59 +14,65 @@
       </div>
     </div>
     <div class="header-main">
-        <div class="container">
-          <div
-            class="header-left float-left d-flex d-lg-flex d-md-block d-xs-block"
-          >
-            <div class="contact">
-              <i class="material-icons">books</i>
-              <span>Djabooks</span>
-            </div>
+      <div class="container">
+        <div
+          class="header-left float-left d-flex d-lg-flex d-md-block d-xs-block"
+        >
+          <div class="contact">
+            <i class="material-icons">books</i>
+            <span>Djabooks</span>
           </div>
-          <div
-            class="header-middle float-lg-left float-md-left float-sm-left float-xs-none"
-          >
-            <div class="logo">
-              <a href="{% url 'index' %}"
-                ><img
-                  src="{% static 'img/logo/logo.png' %}"
-                  width="50px"
-                  height="50px"
-                  alt="NatureCircle"
-              /></a>
-            </div>
+        </div>
+        <div
+          class="header-middle float-lg-left float-md-left float-sm-left float-xs-none"
+        >
+          <div class="logo">
+            <a href="{% url 'index' %}"
+              ><img
+                src="{% static 'img/logo/logo.png' %}"
+                width="50px"
+                height="50px"
+                alt="NatureCircle"
+            /></a>
           </div>
-          <div
-            class="header-right d-flex d-xs-flex d-sm-flex justify-content-end float-right"
-          >
-            <div class="search-wrapper">
-              <a>
-                <i class="material-icons search">search</i>
-                <i class="material-icons close">close</i>
-              </a>
-              <form
-                autocomplete="off"
-                action="/action_page.php"
-                class="search-form"
-              >
-                <div class="autocomplete" style="width: 300px">
-                  <input
-                    id="myInput"
-                    type="text"
-                    name="myCountry"
-                    placeholder="Search here"
-                  />
-                  <button type="button">
-                    <i class="material-icons">search</i>
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div class="user-info">
-              <button type="button" class="btn">
-                <i class="material-icons">perm_identity</i>
-              </button>
-              <div id="user-dropdown" class="user-menu">
+        </div>
+        <div
+          class="header-right d-flex d-xs-flex d-sm-flex justify-content-end float-right"
+        >
+          <div class="search-wrapper">
+            <a>
+              <i class="material-icons search">search</i>
+              <i class="material-icons close">close</i>
+            </a>
+            <form
+              autocomplete="off"
+              action="/action_page.php"
+              class="search-form"
+            >
+              <div class="autocomplete" style="width: 300px">
+                <input
+                  id="myInput"
+                  type="text"
+                  name="myCountry"
+                  placeholder="Search here"
+                />
+                <button type="button">
+                  <i class="material-icons">search</i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="user-info">
+            <a
+              href="#"
+              class="modal-view button"
+              data-toggle="modal"
+              data-target="#modalLoginForm"
+              ><i class="material-icons" style="margin-top: 20px"
+                >perm_identity</i
+              ></a
+            >
+            <!-- <div id="user-dropdown" class="user-menu">
                 <ul>
                   <li>
                     <a href="my-account.html" class="text-capitalize"
@@ -92,109 +98,117 @@
                     >
                   </li>
                 </ul>
-              </div>
-            </div>
-            <div class="cart-wrapper">
-              <button type="button" class="btn">
-                <i class="material-icons">shelves</i>
-                <span class="ttcount">2</span>
-              </button>
-              <div id="cart-dropdown" class="cart-menu">
-                <ul class="w-100 float-left">
-                  <li>
-                    <table class="table table-striped">
-                      <tbody>
-                        <tr>
-                          <td class="text-center">
-                            <a href="#"
-                              ><img
-                                src="{% static 'img/books/cover1.png' %}"
-                                alt="01"
-                                title="01"
-                            /></a>
-                          </td>
-                          <td class="text-left product-name">
-                            <a href="#">A Clash of Kings</a>
-                            <div class="quantity float-left w-100">
-                              <span class="cart-qty">George R.R martin</span>
-                            </div>
-                          </td>
-                          <td class="text-center close">
-                            <a class="close-cart"
-                              ><i class="material-icons">close</i></a
-                            >
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </li>
-                  <li>
-                    <table class="table price mb-30">
-                      <tbody>
-                        <tr>
-                          <td class="text-left">
-                            <strong>Available shelves</strong>
-                          </td>
-                          <td class="text-right"><strong>1</strong></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </li>
-                  <li class="buttons w-100 float-left">
-                    <form action="cart_page.html">
-                      <input
-                        class="btn pull-left mt_10 btn-primary btn-rounded w-100"
-                        value="View Shelf"
-                        type="submit"
-                      />
-                    </form>
-                    <form action="checkout_page.html">
-                      <input
-                        class="btn pull-right mt_10 btn-primary btn-rounded w-100"
-                        value="Borrow"
-                        type="submit"
-                      />
-                    </form>
-                  </li>
-                </ul>
-              </div>
+              </div> -->
+          </div>
+          <div class="cart-wrapper">
+            <button type="button" class="btn">
+              <i class="material-icons">shelves</i>
+              <span class="ttcount">2</span>
+            </button>
+            <div id="cart-dropdown" class="cart-menu">
+              <ul class="w-100 float-left">
+                <li>
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr>
+                        <td class="text-center">
+                          <a href="#"
+                            ><img
+                              src="{% static 'img/books/cover1.png' %}"
+                              alt="01"
+                              title="01"
+                          /></a>
+                        </td>
+                        <td class="text-left product-name">
+                          <a href="#">A Clash of Kings</a>
+                          <div class="quantity float-left w-100">
+                            <span class="cart-qty">George R.R martin</span>
+                          </div>
+                        </td>
+                        <td class="text-center close">
+                          <a class="close-cart"
+                            ><i class="material-icons">close</i></a
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </li>
+                <li>
+                  <table class="table price mb-30">
+                    <tbody>
+                      <tr>
+                        <td class="text-left">
+                          <strong>Available shelves</strong>
+                        </td>
+                        <td class="text-right"><strong>1</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </li>
+                <li class="buttons w-100 float-left">
+                  <form action="cart_page.html">
+                    <input
+                      class="btn pull-left mt_10 btn-primary btn-rounded w-100"
+                      value="View Shelf"
+                      type="submit"
+                    />
+                  </form>
+                  <form action="checkout_page.html">
+                    <input
+                      class="btn pull-right mt_10 btn-primary btn-rounded w-100"
+                      value="Borrow"
+                      type="submit"
+                    />
+                  </form>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="menu">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light d-sm-none d-xs-none d-lg-block navbar-full">
-        
+    </div>
+    <div class="menu">
+      <!-- Navbar -->
+      <nav
+        class="navbar navbar-expand-lg navbar-light d-sm-none d-xs-none d-lg-block navbar-full"
+      >
         <!-- Navbar brand -->
         <a class="navbar-brand text-uppercase d-none" href="#">Djabooks</a>
-        
+
         <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2"
-        aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>		</button>
-        
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent2"
+          aria-controls="navbarSupportedContent2"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
         <!-- Collapsible content -->
         <div class="collapse navbar-collapse">
-        
-        <!-- Links -->
-        <ul class="navbar-nav m-auto justify-content-center">
-        <li class="nav-item dropdown active">
-        <a class="nav-link text-uppercase" href="{% url 'index' %}">
-          Home
-        </a>
-        </li>
-        <li class="nav-item dropdown active">
-        <a class="nav-link text-uppercase" href="{% url 'shelf' %}">
-          Shelf
-        </a>
-        </li>
-        </ul>
-        <!-- Links -->
+          <!-- Links -->
+          <ul class="navbar-nav m-auto justify-content-center">
+            <li class="nav-item dropdown active">
+              <a class="nav-link text-uppercase" href="{% url 'index' %}">
+                Home
+              </a>
+            </li>
+            <li class="nav-item dropdown active">
+              <a class="nav-link text-uppercase" href="{% url 'shelf' %}">
+                Shelf
+              </a>
+            </li>
+          </ul>
+          <!-- Links -->
         </div>
         <!-- Collapsible content -->
-        </nav>
-      </div>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -219,44 +233,72 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-4">
-          <input
-            type="text"
-            id="RegisterForm-name"
-            class="form-control validate"
-            placeholder="Your name"
-          />
-        </div>
-        <div class="md-form mb-4">
-          <input
-            type="email"
-            id="RegisterForm-email"
-            class="form-control validate"
-            placeholder="Your email"
-          />
-        </div>
-        <div class="md-form mb-4">
-          <input
-            type="password"
-            id="RegisterForm-pass"
-            class="form-control validate"
-            placeholder="Your password"
-          />
-        </div>
-        <div class="checkbox-link d-flex justify-content-between">
-          <div class="left-col">
-            <input id="remember-me" type="checkbox" /><label for="remember_me"
-              >Remember Me</label
-            >
+      <form method="POST">
+        {% csrf_token %}
+        <div class="modal-body mx-3">
+          <div class="md-form mb-4">
+            <input
+              type="text"
+              id="RegisterForm-name"
+              class="form-control validate"
+              placeholder="Full Name"
+              autocomplete="on"
+              autocapitalize="on"
+              name="name"
+            />
           </div>
-          <div class="right-col"><a href="#">Forget Password?</a></div>
+          <div class="md-form mb-4">
+            <input
+              type="text"
+              id="RegisterForm-name"
+              class="form-control validate"
+              placeholder="Username"
+              autocomplete="on"
+              autocapitalize="on"
+              name="username"
+            />
+          </div>
+          <div class="md-form mb-4">
+            <input
+              type="email"
+              id="RegisterForm-email"
+              class="form-control validate"
+              placeholder="Your email address"
+              autocomplete="on"
+              autocapitalize="on"
+              name="email"
+            />
+          </div>
+          <div class="md-form mb-4">
+            <input
+              type="password"
+              id="RegisterForm-pass"
+              class="form-control validate"
+              placeholder="Your password"
+              autocomplete="on"
+              autocapitalize="on"
+              name="password1"
+            />
+          </div>
+          <div class="md-form mb-4">
+            <input
+              type="password"
+              id="RegisterForm-pass"
+              class="form-control validate"
+              placeholder="Confirm password"
+              autocomplete="on"
+              autocapitalize="on"
+              name="password2"
+            />
+          </div>
         </div>
-      </div>
 
-      <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-primary">Sign up</button>
-      </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary" name="register">
+            Sign up
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -264,6 +306,68 @@
 <div
   class="modal fade"
   id="modalLoginForm"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-medium text-left">Sign in</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-4">
+          <input
+            type="text"
+            id="LoginForm-name"
+            class="form-control validate"
+            placeholder="Your name"
+          />
+        </div>
+        <div class="md-form mb-4">
+          <input
+            type="password"
+            id="LoginForm-pass"
+            class="form-control validate"
+            placeholder="Your password"
+          />
+        </div>
+        <div class="checkbox-link d-flex justify-content-between">
+          <div class="left-col">
+            <input type="checkbox" id="remember_me" /><label for="remember_me"
+              >Remember Me</label
+            >
+          </div>
+          <div class="right-col">
+            <a
+              href="#"
+              class="modal-view button"
+              data-toggle="modal"
+              data-target="#modalForgetForm"
+              >Forget Password?</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-primary">Sign in</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalForgetForm"
   tabindex="-1"
   role="dialog"
   aria-hidden="true"

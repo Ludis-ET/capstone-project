@@ -31,6 +31,7 @@ class Book(models.Model):
 
     class Meta:
         unique_together = ("title", "author")
+        verbose_name_plural = 'Book List'
     
     def __str__(self):
         return f'{self.title} book by {self.author.first_name}'

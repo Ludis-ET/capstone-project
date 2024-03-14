@@ -68,6 +68,7 @@ wheels/
 *.egg 
 *.manifest 
 *.spec 
+.vscode
 
 # Installer logs 
 pip-log.txt 

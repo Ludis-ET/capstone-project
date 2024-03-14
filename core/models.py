@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -11,11 +12,12 @@ class Genre(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length = 200)
-    author = models.ForeignKey(User,on_delete = models.PROTECT)
+    cover_page = models.ImageField(upload_to='cover pages/',null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.PROTECT)
     genres = models.ManyToManyField(Genre)
     book = models.FileField(upload_to='books/')
     description = models.TextField()
-    history = models.ManyToManyField(User, related_name='borrowed_books')
+    history = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='borrowed_books')
     status_choices = (
         ('available', 'Available'),
         ('borrowed', 'Borrowed'),
@@ -49,7 +51,7 @@ class Book(models.Model):
 
 class Review(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)])
     comment = models.TextField()
 

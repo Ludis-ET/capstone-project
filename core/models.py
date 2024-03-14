@@ -18,7 +18,7 @@ class Book(models.Model):
     book = models.FileField(upload_to='books/')
     description = models.TextField()
     history = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='borrowed_books')
-    views = models.PositiveIntegerField(null = True)
+    views = models.PositiveIntegerField(default = 0)
     status_choices = (
         ('available', 'Available'),
         ('borrowed', 'Borrowed'),

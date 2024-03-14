@@ -4,14 +4,12 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
-    is_author = models.BooleanField(default=False)
-    is_manager = models.BooleanField(default=False)
+    is_author = models.BooleanField(default=False,verbose_name = "Make User an Author")
+    is_manager = models.BooleanField(default=False, verbose_name = "Make User a Manager")
 
     def save(self, *args, **kwargs):
-        if self.is_author:
-            self.is_staff = True
-        if self.is_manager:
-            self.is_superuser = True
+        self.is_staff = self.is_author
+        self.is_superuser = self.is_manager
         super().save(*args, **kwargs)
 
 class Shelf(models.Model):

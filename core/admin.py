@@ -6,3 +6,4 @@ class BookAdmin(admin.ModelAdmin):
     exclude = ('history',)
     
 admin.site.register(Genre)
+admin.site.register(Testimony)

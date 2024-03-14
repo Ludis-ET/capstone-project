@@ -1,0 +1,36 @@
+.message {
+    position: absolute;
+    overflow: hidden;
+    top: 20%;
+    right: 10%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+    z-index: 10;
+    color: #333;
+    font-family: arial;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.message span {
+    font-size: 30px;
+    border: 1px solid black;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.message span:hover {
+    transition: 0.2s ease-in-out;
+    background-color: #333;
+    color:#fff;
+}
+
+.badge{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:4px;
+}

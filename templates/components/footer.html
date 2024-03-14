@@ -3,7 +3,7 @@
 <footer class="page-footer font-small footer1">
   <div class="container text-center text-md-left">
     <div class="row">
-      <div class="col-md-4 footer-column">
+      <div class="col-md-6 footer-column">
         <div class="title">
           <a
             href="#information"
@@ -49,21 +49,30 @@
             class="font-weight-normal text-capitalize mb-10"
             data-toggle="collapse"
             aria-expanded="false"
-            >company</a
+            >Hot Links</a
           >
         </div>
         <ul id="company" class="list-unstyled collapse">
           <li>
-            <a href="#">search</a>
+            <a href="{% url 'index' %}">Home</a>
           </li>
           <li>
-            <a href="#">New Products</a>
+            <a href="{% url 'shelf' %}">Shelf</a>
           </li>
           <li>
-            <a href="category.html">Best Collection</a>
+            <div class="search-wrapper">
+              <a> Seach Book </a>
+            </div>
           </li>
           <li>
-            <a href="wishlist.html">wishlist</a>
+            <div class="cart-wrapper">
+              <button
+                type="button"
+                class="btn btn-rounded rounded-0 btn-outline-primary"
+              >
+                my shelf
+              </button>
+            </div>
           </li>
         </ul>
       </div>
@@ -72,14 +81,19 @@
         <div class="block-newsletter">
           <div class="title">
             <a href="#" class="font-weight-normal text-capitalize mb-10"
-              >Sign Up For Newsletter</a
+              >Thank you for choosing us!</a
             >
           </div>
           <div class="block-content">
             <div class="footer-desc">
-              Sign up to our newsletter to get the latest books, authors
+              Welcome to our cozy book nook! Dive into a world of stories at our
+              quaint bookstore nestled in the heart of town. With a carefully
+              curated selection of books across genres, there's something for
+              every reader to enjoy. Explore the shelves, find your next
+              favorite read, and savor the magic of storytelling. Join us for
+              literary adventures and endless inspiration!
             </div>
-            <form method="post" action="contact-us.html">
+            <!-- <form method="post" action="contact-us.html">
               <div class="input-group">
                 <input
                   type="email"
@@ -98,7 +112,7 @@
                   </button>
                 </span>
               </div>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>

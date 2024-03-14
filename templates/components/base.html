@@ -11,7 +11,11 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo/logo.png' %}" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'img/logo/logo.png' %}"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900"
       rel="stylesheet"
@@ -34,11 +38,30 @@
     <link href="{% static 'css/owl-carousel.css' %}" rel="stylesheet" />
     <link href="{% static 'css/lightbox.css' %}" rel="stylesheet" />
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" />
+
+    <link href="{% static 'css/message.css' %}" rel="stylesheet" />
   </head>
 
   <body {% block class %}{% endblock %}>
+    <div
+      class="message"
+      id="message"
+      style="background-color: #77d66a; border-left: 13px solid green"
+    >
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum natus
+        laboriosam repellendus quidem nulla?
+      </p>
+      <span onclick="handleMessage()">&times;</span>
+    </div>
     {% block header %} {% endblock %}
 
+    <script>
+      const message = document.getElementById("message");
+      const handleMessage = () => {
+        message.style.display = "none";
+      };
+    </script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>

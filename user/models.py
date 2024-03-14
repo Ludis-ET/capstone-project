@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 
 
 class CustomUser(AbstractUser):
@@ -13,7 +14,7 @@ class CustomUser(AbstractUser):
         super().save(*args, **kwargs)
 
 class Shelf(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,verbose_name = "Student")
     books = models.ManyToManyField('core.Book', related_name='shelves')
     added_time = models.DateTimeField(auto_now_add=True)
 

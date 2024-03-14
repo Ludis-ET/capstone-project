@@ -5,5 +5,4 @@ from .models import *
 class BookAdmin(admin.ModelAdmin):
     exclude = ('history',)
     
-admin.site.register(Review)
 admin.site.register(Genre)

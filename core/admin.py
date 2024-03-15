@@ -11,3 +11,8 @@ class GenreAdmin(admin.ModelAdmin):
         url = "http://google.com"
         format_html('<a href={}>{}</a>, url, genre')
 
+@admin.register(models.Book)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author','genres' 'view', 'status']
+
+

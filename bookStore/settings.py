@@ -126,8 +126,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True  
 EMAIL_HOST = 'smtp.gmail.com'  
-EMAIL_HOST_USER = os.getenv('EMAIL_ADDRESS')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS') 
+EMAIL_FROM = 'leulsegedmelaku1020@gmail.com'
+EMAIL_HOST_USER = 'leulsegedmelaku1020@gmail.com'
+EMAIL_HOST_PASSWORD = 'tlobhndebhjzkryl'
 EMAIL_PORT = 587 
+PASSWORD_RESET_TIMEOUT = 14400

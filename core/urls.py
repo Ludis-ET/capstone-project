@@ -7,4 +7,5 @@ urlpatterns = [
     path("shelf/book/<int:id>",book,name='book'),
     path("register/",register,name='register'),
     path("login/",login,name='login'),
+    path('activate/<uidb64>/<token>', activate, name='activate')
 ]

@@ -16,6 +16,7 @@ class CustomUserCreationForm(UserCreationForm):
 @admin.register(CustomUser)
 class UserAdmin(UserAdmin):
     list_display = ["is_author" ]
+    list_filter = ['is_author']
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
     fieldsets = (

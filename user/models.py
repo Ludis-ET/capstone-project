@@ -4,8 +4,8 @@ from django.conf import settings
 
 
 class CustomUser(AbstractUser):
-    is_author = models.BooleanField(default=False, verbose_name= "Make User an Author")
-    is_manager = models.BooleanField(default=False, verbose_name= "Make User a Manager")
+    is_author = models.BooleanField(default=False, verbose_name= "is an Author")
+    is_manager = models.BooleanField(default=False, verbose_name= "is a Manager")
 
     class Meta:
         verbose_name = "Person"

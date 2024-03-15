@@ -96,3 +96,8 @@ def shelf(request):
 
 def book(request,id):
     return render(request, "pages/shelf/BookDetail.html",{})
+
+
+
+def reset_password(request):
+    return render(request,'pages/user/resetpassword.html',{})

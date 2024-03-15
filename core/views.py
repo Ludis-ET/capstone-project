@@ -3,6 +3,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 
+
 def index(request):
     return render(request, "pages/Home/home.html",{})
 

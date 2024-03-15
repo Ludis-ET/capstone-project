@@ -6,31 +6,37 @@
     max-width: 400px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    padding: 20px;
+    justify-content: space-between;
     z-index: 10;
+  }
+  
+  .message p {
+    padding: 20px;
     color: #333;
     font-family: arial;
     font-size: 1.1rem;
     font-weight: 600;
-}
-
-.message span {
+  }
+  
+  .message span {
     font-size: 30px;
-    border: 1px solid black;
+    margin: 20px;
     padding: 5px;
     cursor: pointer;
-}
-
-.message span:hover {
-    transition: 0.2s ease-in-out;
     background-color: #333;
-    color:#fff;
-}
-
-.badge{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:4px;
-}
+    color: #fff;
+  }
+  
+  .message span:hover {
+    transition: 0.2s ease-in-out;
+    border: 1px solid black;
+    background: none;
+    color: #333;
+  }
+  
+  .badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }

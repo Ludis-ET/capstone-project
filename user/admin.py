@@ -14,9 +14,10 @@ class CustomUserCreationForm(UserCreationForm):
 
 # Register your models here.
 @admin.register(CustomUser)
-class UserAdmin(UserAdmin):
-    list_display = ["is_author" ]
-    list_filter = ['is_author']
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'email', 'type_of_user']
+    search_fields = ['username__istartswith']
+    list_filter = ['is_author', 'is_manager']
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
     fieldsets = (
@@ -29,3 +30,9 @@ class UserAdmin(UserAdmin):
             'fields': ('username', 'password1', 'password2', 'is_author', 'is_manager', 'is_active'),
         }),
     )
+
+    def type_of_user(self, user):
+        if user.is_author:
+            return 'author'
+        return 'manager'
+

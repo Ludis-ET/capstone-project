@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import CustomUserCreationForm
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 def index(request):
@@ -12,13 +12,19 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, f'{form.first_name} account created successfuly!')
+            messages.success(request, f'{form.cleaned_data.get("first_name")} account created successfully!')
             return redirect(previous_url)
         else:
-            messages.error(request, form.errors)
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f' {error}')
             return redirect(previous_url)
     else:
-        return HttpResponse("<h1 style='position:absolute;top:30%;left:40%;'>Nothing to register</h1>")
+        messages.error(request, 'nothing to register')
+        if previous_url:
+            return redirect(previous_url)
+        else:
+            return redirect('index')
 
 
 def shelf(request):

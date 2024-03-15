@@ -11,6 +11,11 @@ class CustomUser(AbstractUser):
         verbose_name = "Person"
         verbose_name_plural = "People"
 
+    def save(self, *args, **kwargs):
+        self.is_staff = self.is_author
+        self.is_superuser = self.is_manager
+        super().save(*args, **kwargs)
+
 
 class Shelf(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,verbose_name = "Student")

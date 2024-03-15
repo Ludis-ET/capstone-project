@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 
 def index(request):
@@ -19,12 +19,30 @@ def register(request):
                 for error in errors:
                     messages.error(request, f' {error}')
             return redirect(previous_url)
+    messages.error(request, 'nothing to register')
+    if previous_url:
+        return redirect(previous_url)
     else:
-        messages.error(request, 'nothing to register')
-        if previous_url:
-            return redirect(previous_url)
+        return redirect('index')
+        
+
+def login(request):
+    previous_url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            messages.success(request, f'{user.first_name} logged in successfully!')
         else:
-            return redirect('index')
+            messages.error(request, f'Invalid username and password combination')
+        return redirect(previous_url)
+    messages.error(request, "can't do authentication with nothing")
+    if previous_url:
+        return redirect(previous_url)
+    else:
+        return redirect('index')
 
 
 def shelf(request):

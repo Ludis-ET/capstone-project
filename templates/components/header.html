@@ -235,7 +235,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST">
+      <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="modal-body mx-3">
           <div class="md-form mb-4">
@@ -263,23 +263,12 @@
             />
           </div>
           <div class="checkbox-link d-flex justify-content-between">
-            <div class="left-col">
+            <!-- <div class="left-col">
               <input type="checkbox" id="remember_me" name="remember" /><label
                 for="remember_me"
                 >Remember Me</label
               >
-            </div>
-            <div class="right-col">
-              <a
-                href="#"
-                class="modal-view button"
-                data-toggle="modal"
-                data-target="#modalForgetForm"
-                >Forget Password?</a
-              >
-            </div>
-          </div>
-          <div class="checkbox-link d-flex justify-content-between">
+            </div> -->
             <div class="left-col">
               <a
                 href="#"
@@ -290,6 +279,15 @@
                 data-dismiss="modal"
                 aria-label="Close"
                 >New to Djabooks? Register Here</a
+              >
+            </div>
+            <div class="right-col">
+              <a
+                href="#"
+                class="modal-view button"
+                data-toggle="modal"
+                data-target="#modalForgetForm"
+                >Forget Password?</a
               >
             </div>
           </div>

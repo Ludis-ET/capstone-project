@@ -1,66 +1,51 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <title>Djabook - book store</title>
-
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="{% static 'img/logo/logo.png' %}"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,900"
-      rel="stylesheet"
-    />
-
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link
-      href="{% static 'vendor/bootstrap/css/bootstrap.css' %}"
-      rel="stylesheet"
-    />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo/logo.png' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet" />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
     <link href="{% static 'css/owl-carousel.css' %}" rel="stylesheet" />
     <link href="{% static 'css/lightbox.css' %}" rel="stylesheet" />
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" />
-
     <link href="{% static 'css/message.css' %}" rel="stylesheet" />
-  </head>
-
-  <body {% block class %}{% endblock %}>
-    <div
-      class="message"
-      id="message"
-      style="background-color: #77d66a; border-left: 13px solid green"
-    >
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum natus
-        laboriosam repellendus quidem nulla?
-      </p>
-      <span onclick="handleMessage()">&times;</span>
-    </div>
+</head>
+<body>
+    {% block content %}
     {% block header %} {% endblock %}
 
+    <div class="message" id="message">
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p {% if message.tags == 'success' %}
+                           style="background-color: #77d66a; border-left: 13px solid green"
+                       {% elif message.tags == 'error' %}
+                           style="background-color: #d66a6a; border-left: 13px solid red"
+                       {% endif %}>
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            </div>
+            <span onclick="handleMessage()">&times;</span>
+        {% endif %}
+    </div>
+    {% endblock %}
+
     <script>
-      const message = document.getElementById("message");
-      const handleMessage = () => {
-        message.style.display = "none";
-      };
+        const message = document.getElementById("message");
+        const handleMessage = () => {
+            message.style.display = "none";
+        };
     </script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -79,17 +64,17 @@
     <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 
     <script type="text/javascript">
-      var Tawk_API = Tawk_API || {},
-        Tawk_LoadStart = new Date();
-      (function () {
-        var s1 = document.createElement("script"),
-          s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = "https://embed.tawk.to/5ac1aabb4b401e45400e4197/default";
-        s1.charset = "UTF-8";
-        s1.setAttribute("crossorigin", "*");
-        s0.parentNode.insertBefore(s1, s0);
-      })();
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = "https://embed.tawk.to/5ac1aabb4b401e45400e4197/default";
+            s1.charset = "UTF-8";
+            s1.setAttribute("crossorigin", "*");
+            s0.parentNode.insertBefore(s1, s0);
+        })();
     </script>
-  </body>
+</body>
 </html>

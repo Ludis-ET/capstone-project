@@ -43,6 +43,7 @@
   </head>
 
   <body {% block class %}{% endblock %}>
+    {{form.error}}
     {% if messages %}
     <div
       class="message"

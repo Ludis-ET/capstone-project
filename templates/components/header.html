@@ -431,7 +431,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST">
+      <form method="POST" action="{% url 'reset_request' %}">
         {% csrf_token %}
         <div class="modal-body mx-3">
           <div class="md-form mb-4">

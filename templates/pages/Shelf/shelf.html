@@ -177,6 +177,7 @@
               id="sort-view"
               role="tabpanel"
             >
+            {% for book in books %}
               <div class="product-layouts">
                 <div class="product-thumb row">
                   <div class="image zoom col-xs-12 col-sm-3 col-md-2">
@@ -199,7 +200,7 @@
                       <div class="caption">
                         <h4 class="product-title text-capitalize">
                           <a href="product-details.html"
-                            >similique suntin culpaqui</a
+                            >{{book.title}}</a
                           >
                         </h4>
                       </div>
@@ -270,6 +271,7 @@
                   </div>
                 </div>
               </div>
+            {% endfor %}
             </div>
           </div>
           <div class="pagination-wrapper float-left w-100">

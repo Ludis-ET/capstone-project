@@ -7,8 +7,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import send_mail
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from .token import account_activation_token
 from user.models import CustomUser
+from django.db.models.query_utils import Q
 
 def activate(request, uidb64, token):
     User = CustomUser
@@ -98,6 +100,56 @@ def book(request,id):
     return render(request, "pages/shelf/BookDetail.html",{})
 
 
+def password_reset_request(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            user_email = form.cleaned_data['email']
+            associated_user = CustomUser.objects.filter(Q(email=user_email)).first()
+            if associated_user:
+                mail_subject = "Password Reset Link"
+                message = render_to_string('email/reset.html', {
+                    'user': associated_user,
+                    'domain': get_current_site(request).domain,
+                    'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)),
+                    'token': account_activation_token.make_token(associated_user),
+                    "protocol": 'https' if request.is_secure() else 'http'
+                })
+                
+                try:
+                    send_mail(mail_subject, message, None, [user_email], html_message=message)
+                    messages.success(request, f'A password reset link sent to your address! Check {user_email} and confirm reset your password.')
+                except Exception as e:
+                    messages.error(request, f'Problem sending email to <b>{user_email}</b>. Please try again. Error: {str(e)}')
+            
+            else:messages.error(request, f'email not found')
+    return redirect('index')
 
-def reset_password(request):
-    return render(request,'pages/user/resetpassword.html',{})
+
+
+def passwordResetConfirm(request, uidb64, token):
+    User = CustomUser
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Your password has been set. You may go ahead and log in now.")
+                return redirect('index')
+            else:
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        messages.error(request, f' {error}')
+
+        return render(request, 'pages/user/resetpassword.html',{})
+    else:
+        messages.error(request, "Link is expired")
+
+    messages.error(request, 'Something went wrong, redirecting back to Homepage')
+    return redirect("index")

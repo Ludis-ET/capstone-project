@@ -18,7 +18,7 @@ class GenreAdmin(admin.ModelAdmin):
 
 @admin.register(models.Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author','view', 'status']
+    list_display = ['title', 'author','views', 'status']
     list_filter = ['genres','status', 'author']
     search_fields = ['title__istartswith']
     exclude = ('view', 'status')

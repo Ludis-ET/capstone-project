@@ -43,18 +43,21 @@
   </head>
 
   <body {% block class %}{% endblock %}>
+    {% if messages %}
     <div
       class="message"
       id="message"
       style="background-color: #77d66a; border-left: 13px solid green"
     >
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum natus
-        laboriosam repellendus quidem nulla?
-      </p>
+      <div>
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+      </div>
+
       <span onclick="handleMessage()">&times;</span>
     </div>
-    {% block header %} {% endblock %}
+    {% endif %} {% block header %} {% endblock %}
 
     <script>
       const message = document.getElementById("message");

@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.db.models.query_utils import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.core.paginator import Paginator
 
 from user.models import CustomUser,Wishlist,Shelf
 from .models import Book
@@ -114,8 +115,27 @@ def login(request):
 
 
 def shelf(request):
-    # books = Book.objects.all()
-    return render(request, "pages/shelf/shelf.html",{})
+    user = request.user
+    books_list = Book.objects.all()
+    sort_by = request.GET.get('sort')
+    if sort_by == 'p-name':
+        books_list = sorted(books_list, key=lambda x: x.history.count(), reverse=True)
+    items_per_page = int(request.GET.get('number', 9))
+
+    paginator = Paginator(books_list, items_per_page)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    favorite, created = Wishlist.objects.get_or_create(user=user)
+    shelf, created = Shelf.objects.get_or_create(user=user)
+    context = {
+        'user': user,
+        'fav':favorite,
+        'shelf':shelf,
+        'books': page_obj,
+        'items_per_page':items_per_page
+    }
+    return render(request, "pages/shelf/shelf.html",context)
 
 
 def book(request,id):

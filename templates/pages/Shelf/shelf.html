@@ -43,71 +43,79 @@
             <div
               class="shop-results-wrapper d-flex d-sm-flex d-xs-block d-lg-flex col-md-7 col-sm-8 col-xs-12 justify-content-end"
             >
-              <div class="shop-results d-flex align-items-center">
-                <span>Show</span>
-                <div class="shop-select">
-                  <select name="number" id="number">
-                    <option value="9">9</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                  </select>
-                </div>
+            <div class="shop-results d-flex align-items-center">
+              <span>Show</span>
+              <div class="shop-select">
+                  <form action="" method="get">
+                      <select name="number" id="number" onchange="this.form.submit()">
+                          <option value="6" {% if items_per_page == 6 %}selected{% endif %}>6</option>
+                          <option value="9" {% if items_per_page == 9 %}selected{% endif %}>9</option>
+                          <option value="15" {% if items_per_page == 15 %}selected{% endif %}>15</option>
+                          <option value="20" {% if items_per_page == 20 %}selected{% endif %}>20</option>
+                          <option value="50" {% if items_per_page == 50 %}selected{% endif %}>50</option>
+                          <option value="100" {% if items_per_page == 100 %}selected{% endif %}>100</option>
+                      </select>
+                  </form>
               </div>
-              <div class="shop-results d-flex align-items-center">
-                <span>Sort By</span>
-                <div class="shop-select">
-                  <select name="sort" id="sort">
-                    <option value="position">Default sorting</option>
-                    <option value="p-name">Sort Popularity</option>
-                  </select>
-                </div>
-              </div>
+          </div>
+          <div class="shop-results d-flex align-items-center">
+            <span>Sort By</span>
+            <div class="shop-select">
+                <form action="" method="get">
+                    <select name="sort" id="sort" onchange="this.form.submit()">
+                        <option value="position" {% if request.GET.sort != 'p-name' %}selected{% endif %}>Default sorting</option>
+                        <option value="p-name" {% if request.GET.sort == 'p-name' %}selected{% endif %}>Sort Popularity</option>
+                    </select>
+                    <!-- Add the number of items select dropdown here as well -->
+                </form>
+            </div>
+        </div>
             </div>
           </header>
           <div class="tab-content text-center products w-100 float-left">
             <div class="tab-pane grid fade active" id="grid" role="tabpanel">
               <div class="row">
-
+{% for book in books %}
                 <div class="product-layouts col-lg-3 col-md-3 col-sm-6 col-xs-6">
                   <div class="product-thumb">
                     <div class="image vertical_scrolling_bottom_to_top">
-                      <a href="product-details.html">
+                      <a href="{% url 'book' book.id %}">
                         <img
-                          src="{% static 'img/books/cover1.png' %}"
+                          src="{{book.coverpage.url}}"
                           alt="01"
+                          style="max-width: 200px;"
                         />
                         <img
-                          src="{% static 'img/books/cover1.png' %}"
+                        style="max-width: 200px;"
+                          src="{{book.coverpage.url}}"
                           alt="02"
                           class="second_image img-responsive"
                         />
                       </a>
                       <!-- <ul class="countdown1 countdown">
-                      <li>
-                        <span class="days">10</span>
-                        <p class="days_text">Days</p>
-                      </li>
-                      <li>
-                        <span class="hours">00</span>
-                        <p class="hours_text">Hours</p>
-                      </li>
-                      <li>
-                        <span class="minutes">00</span>
-                        <p class="minutes_text">Minutes</p>
-                      </li>
-                      <li>
-                        <span class="seconds">00</span>
-                        <p class="seconds_text">Seconds</p>
-                      </li>
-                    </ul> -->
+                          <li>
+                            <span class="days">10</span>
+                            <p class="days_text">Days</p>
+                          </li>
+                          <li>
+                            <span class="hours">00</span>
+                            <p class="hours_text">Hours</p>
+                          </li>
+                          <li>
+                            <span class="minutes">00</span>
+                            <p class="minutes_text">Minutes</p>
+                          </li>
+                          <li>
+                            <span class="seconds">00</span>
+                            <p class="seconds_text">Seconds</p>
+                          </li>
+                        </ul> -->
                     </div>
                     <div class="thumb-description">
                       <div class="caption">
                         <h4 class="product-title text-capitalize">
-                          <a href="product-details.html"
-                            >aliquam quaerat voluptatem</a
+                          <a href="{% url 'book' 1 %}"
+                            >{{book.title}}</a
                           >
                         </h4>
                       </div>
@@ -115,26 +123,27 @@
                         <div
                           class="product-ratings d-inline-block align-middle"
                         >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
+                        {% for i in "12345" %}
+                          {% if i <= book.average_rating %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons">star</i>
+                            </span>
+                          {% else %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons off">star</i>
+                            </span>
+                          {% endif %}
+                        {% endfor %}
                         </div>
                       </div>
                       <div class="price">
                         <div class="regular-price">
-                          <i class="material-icons">group</i> 235
+                          <div class="badge">
+                            <i class="material-icons">group</i> {{book.history.count}}
+                          </div>
+                          <div class="badge">
+                            <i class="material-icons">visibility</i> {{book.views}}
+                          </div>
                         </div>
                       </div>
                       <div class="button-wrapper">
@@ -144,19 +153,57 @@
                             class="btn btn-primary btn-cart"
                             data-target="#cart-pop"
                             data-toggle="modal"
+                            {% if book.status != 'available' %}
                             disabled="disabled"
+                            {% endif %}
+                          ><a style="text-decoration: none; color: #fff;"
+                          onmouseover="this.style.color='black';"
+                          onmouseout="this.style.color='#fff';"
+                          {% if user.is_authenticated %}
+                              {% if book in shelf.books.all %}
+                              href="{% url 'remshelf' user.username book.id %}"
+                              {% else %}
+                              href="{% url 'addshelf' user.username book.id %}"
+                              {% endif %}
+                            {% endif %}
                           >
-                            <i class="material-icons">shelves</i
-                            ><span>Add to shelf</span>
+                            <i class="material-icons">
+                              {% if user.is_authenticated %}
+                                {% if book in shelf.books.all %}
+                                delete
+                                {% else %}
+                                shelves
+                                {% endif %}
+                              {% else %}
+                              shelves
+                              {% endif %}
+                              </i><span>Add to shelf</span>
+                          </a>
                           </button>
                           <a
-                            href="wishlist.html"
+                            {% if user.is_authenticated %}
+                              {% if book in fav.books.all %}
+                              href="{% url 'remwish' user.username book.id %}"
+                              {% else %}
+                              href="{% url 'addwish' user.username book.id %}"
+                              {% endif %}
+                            {% endif %}
                             class="btn btn-primary btn-wishlist"
-                            ><i class="material-icons">favorite</i
-                            ><span>wishlist</span></a
-                          >
-
-                          <button
+                            ><i class="material-icons">
+                              {% if user.is_authenticated %}
+                                {% if book in fav.books.all %}
+                                thumb_down
+                                {% else %}
+                                thumb_up
+                                {% endif %}
+                              {% else %}
+                              sentiment_dissatisfied
+                              {% endif %}
+                              </i
+                            ><span>wishlist</span></a>
+  
+                          <a
+                            href="{% url 'book' 1 %}"
                             type="button"
                             class="btn btn-primary btn-quickview"
                             data-toggle="modal"
@@ -164,12 +211,13 @@
                           >
                             <i class="material-icons">visibility</i
                             ><span>Quick View</span>
-                          </button>
+                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
             <div
@@ -179,15 +227,16 @@
             >
             {% for book in books %}
               <div class="product-layouts">
+                
                 <div class="product-thumb row">
                   <div class="image zoom col-xs-12 col-sm-3 col-md-2">
                     <a
-                      href="product-details.html"
+                      href="{% url 'book' book.id %}"
                       class="d-block position-relative"
                     >
-                      <img src="{% static 'img/books/cover1.png' %}" alt="07" />
+                      <img src="{{book.coverpage.url}}" alt="07" />
                       <img
-                      src="{% static 'img/books/cover1.png' %}"
+                      src="{{book.coverpage.url}}"
                         alt="08"
                         class="second_image img-responsive"
                       />
@@ -199,42 +248,40 @@
                     <div class="sort-title col-md-5 col-sm-7 float-left">
                       <div class="caption">
                         <h4 class="product-title text-capitalize">
-                          <a href="product-details.html"
+                          <a href="{{book.coverpage.url}}"
                             >{{book.title}}</a
                           >
                         </h4>
                       </div>
                       <div class="rating mb-10">
                         <div class="product-ratings d-inline-block align-middle">
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
+                          {% for i in "12345" %}
+                        {% if i <= book.average_rating %}
+                          <span class="fa fa-stack">
+                            <i class="material-icons">star</i>
+                          </span>
+                        {% else %}
+                          <span class="fa fa-stack">
+                            <i class="material-icons off">star</i>
+                          </span>
+                        {% endif %}
+                      {% endfor %}
                         </div>
                       </div>
                       <div class="description mb-10">
-                        Phasellus ut felis eu libero semper elementum. Maecenas
-                        sit amet scelerisque ante. Nam ultrices enim sed lacus
-                        gravida condimentum. Proin at malesuada nibh.
+                        {{book.description}}
                       </div>
                     </div>
                     <div
                       class="price-main col-md-3 col-sm-5 float-left text-center text-sm-center text-xs-left"
                     >
                       <div class="price">
-                        <div class="regular-price"><i class="material-icons">group</i> 235</div>
+                        <div class="regular-price"><i class="material-icons">group</i> {{book.history.all.count}}</div>
+                        {% if book.status == 'available' %}
                         <div class="regular-price" style="background-color: green; color: #fff; border: 10px; padding: 5px;">Available</div>
+                        {% else %}
+                        <div class="regular-price" style="background-color: red; color: #fff; border: 10px; padding: 5px;">Not Available</div>
+                      {% endif %}
                       </div>
                     </div>
                     <div
@@ -246,18 +293,56 @@
                           class="btn btn-primary btn-cart"
                           data-target="#cart-pop"
                           data-toggle="modal"
+                          {% if book.status != 'available' %}
                           disabled="disabled"
+                          {% endif %}
+                        ><a style="text-decoration: none; color: #fff;"
+                        onmouseover="this.style.color='black';"
+                        onmouseout="this.style.color='#fff';"
+                        {% if user.is_authenticated %}
+                            {% if book in shelf.books.all %}
+                            href="{% url 'remshelf' user.username book.id %}"
+                            {% else %}
+                            href="{% url 'addshelf' user.username book.id %}"
+                            {% endif %}
+                          {% endif %}
                         >
-                          <i class="material-icons">shopping_cart</i
-                          ><span>out of stock</span>
+                          <i class="material-icons">
+                            {% if user.is_authenticated %}
+                              {% if book in shelf.books.all %}
+                              delete
+                              {% else %}
+                              shelves
+                              {% endif %}
+                            {% else %}
+                            shelves
+                            {% endif %}
+                            </i><span>Add to shelf</span>
+                        </a>
                         </button>
                         <a
-                          href="wishlist.html"
+                          {% if user.is_authenticated %}
+                            {% if book in fav.books.all %}
+                            href="{% url 'remwish' user.username book.id %}"
+                            {% else %}
+                            href="{% url 'addwish' user.username book.id %}"
+                            {% endif %}
+                          {% endif %}
                           class="btn btn-primary btn-wishlist"
-                          ><i class="material-icons">favorite</i
-                          ><span>wishlist</span></a
-                        >
-                        <button
+                          ><i class="material-icons">
+                            {% if user.is_authenticated %}
+                              {% if book in fav.books.all %}
+                              thumb_down
+                              {% else %}
+                              thumb_up
+                              {% endif %}
+                            {% else %}
+                            sentiment_dissatisfied
+                            {% endif %}
+                            </i
+                          ><span>wishlist</span></a>
+                          <a
+                          href="{% url 'book' 1 %}"
                           type="button"
                           class="btn btn-primary btn-quickview"
                           data-toggle="modal"
@@ -265,7 +350,7 @@
                         >
                           <i class="material-icons">visibility</i
                           ><span>Quick View</span>
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -275,29 +360,46 @@
             </div>
           </div>
           <div class="pagination-wrapper float-left w-100">
-            <p>Showing 1 to 9 of 11 (2 Pages)</p>
+            <p>Showing {{ books.start_index }} to {{ books.end_index }} of {{ books.paginator.count }} ({{ books.paginator.num_pages }} Pages)</p>
             <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
+                <ul class="pagination">
+                    {% if books.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">First</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ books.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&lsaquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for num in books.paginator.page_range %}
+                        <li class="page-item {% if books.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if books.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ books.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&rsaquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ books.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
             </nav>
-          </div>
+        </div>
+        
         </div>
         <div class="left-column sidebar-canvas order-lg-1">
           <span class="close-filter"></span>

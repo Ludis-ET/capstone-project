@@ -124,7 +124,7 @@
                           class="product-ratings d-inline-block align-middle"
                         >
                         {% for i in "12345" %}
-                          {% if i <= book.average_rating %}
+                          {% if i|add:"0" <= book.average_rating %}
                             <span class="fa fa-stack">
                               <i class="material-icons">star</i>
                             </span>
@@ -256,7 +256,7 @@
                       <div class="rating mb-10">
                         <div class="product-ratings d-inline-block align-middle">
                           {% for i in "12345" %}
-                        {% if i <= book.average_rating %}
+                        {% if i|add:"0" <= book.average_rating %}
                           <span class="fa fa-stack">
                             <i class="material-icons">star</i>
                           </span>

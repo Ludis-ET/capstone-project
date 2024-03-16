@@ -11,10 +11,11 @@ from django.db.models.query_utils import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.core.paginator import Paginator
+from django.urls import reverse
 
 from user.models import CustomUser,Wishlist,Shelf
 from .models import *
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ReviewForm
 from .token import account_activation_token
 
 # django orm
@@ -164,11 +165,33 @@ def book(request,id):
     book = Book.objects.get(id=id)
     favorite, created = Wishlist.objects.get_or_create(user=user)
     shelf, created = Shelf.objects.get_or_create(user=user)
+    reviews = Review.objects.filter(book=book)
+    recommended_books = Book.objects.filter(genres__in=book.genres.all()).exclude(id=book.id).distinct()[:5]
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.book = book
+            review.user = user
+            review.save()
+            messages.success(request, 'Review posted successfully! Thank you.')
+            return redirect(reverse('book', kwargs={'id': book.id}))
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{error} on {field}')
+        return redirect(reverse('book', kwargs={'id': book.id}))
+    else:
+        book.views += 1
+        book.save()
+                
     context = {
         'user': user,
         'fav':favorite,
         'shelf':shelf,
         'book':book,
+        'reviews':reviews,
+        'rec':recommended_books,
     }
     return render(request, "pages/shelf/BookDetail.html",context)
 

@@ -1,7 +1,7 @@
 {% extends "components/link.html" %} 
 {% block class %}id="off-canvas-right" class="off-canvas-right"{% endblock %} 
 {% load static %} 
-{% block current %}{{username}} / whishlist{% endblock %} 
+{% block current %}{{user.username}} / whishlist{% endblock %} 
 {% block rest %}
 <div class="cart-area table-area pt-110 pb-95 float-left w-100">
     <div class="container">
@@ -12,21 +12,23 @@
                     <tr>
                         <th class="table-remove text-uppercase">remove</th>
                         <th class="table-image text-uppercase">image</th>
-                        <th class="table-p-name text-uppercase">product</th>
+                        <th class="table-p-name text-uppercase">Book</th>
                         <th class="table-p-price text-uppercase">borrowed people</th>
                         <th class="table-p-qty text-uppercase">Stock Status</th>
                         <th class="table-total text-uppercase">add to shelf</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for sh in shelfs.books.all %}
                     <tr>
-                        <td class="table-remove"><button><i class="material-icons">delete</i></button></td>
-                        <td class="table-image"><a href="product-details.html"><img src="{% static 'img/books/cover1.png' %}" alt=""></a></td>
-                        <td class="table-p-name text-capitalize"><a href="product-details.html">aspetur autodit autfugit</a></td>
-                        <td class="table-p-price"><p>300</p></td>
-                        <td class="table-p-qty">in stock</td>
-                        <td class="table-addtocart"><a href="cart_page.html" class="btn-primary btn">Add to My shelf</a></td>
+                        <td class="table-remove"><a href="{% url 'remshelf' user.username sh.id %}"><i class="material-icons">delete</i></a></td>
+                        <td class="table-image"><a href="{% url 'book' sh.id %}"><img src="{{sh.coverpage.url}}" alt=""></a></td>
+                        <td class="table-p-name text-capitalize"><a href="{% url 'book' sh.id %}">{{sh.title}}</a></td>
+                        <td class="table-p-price"><p>{{sh.history.all.count}}</p></td>
+                        <td class="table-p-qty">{{sh.status}}</td>
+                        <td class="table-addtocart"><a href="{% url 'addborrow' user.username sh.id %}" class="btn-primary btn">Borrow</a></td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

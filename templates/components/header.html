@@ -163,20 +163,23 @@
                   </table>
                 </li>
                 <li class="buttons w-100 float-left">
-                  <form action="cart_page.html">
+                  {% if user.is_authenticated %}
+                  <a href="{% url 'myshelf' user.username %}">
                     <input
                       class="btn pull-left mt_10 btn-primary btn-rounded w-100"
                       value="View Shelf"
                       type="submit"
                     />
-                  </form>
-                  <form action="checkout_page.html">
+                  </a>
+                  <br>
+                  <a href="{% url 'wishlist' user.username %}">
                     <input
-                      class="btn pull-right mt_10 btn-primary btn-rounded w-100"
-                      value="Borrow"
-                      type="submit"
+                      class="btn pull-left mt_10 btn-primary btn-rounded w-100"
+                      value="favorite"
+                      type="favorite"
                     />
-                  </form>
+                  </a>
+                  {% endif %}
                 </li>
               </ul>
             </div>

@@ -43,8 +43,8 @@ class Book(models.Model):
     def average_rating(self):
         reviews = self.review_set.all()
         if reviews:
-            total_ratings = sum(review.rating for review in reviews)
-            return total_ratings / len(reviews)
+            total_ratings = sum(review.rating for review in reviews if review.book == self)
+            return int(total_ratings / len(reviews))
         else:
             return 0
     
@@ -65,9 +65,9 @@ class Review(models.Model):
     def __str__(self):
         return f"Review by {self.user.username} for {self.book.title}"
 
-    def clean(self):
-        if self.user not in self.book.history.all():
-            raise ValidationError("You can only review books that you have borrowed.")
+    # def clean(self):
+    #     if self.user not in self.book.history.all():
+    #         raise ValidationError("You can only review books that you have borrowed.")
         
 
 class Testimony(models.Model):

@@ -45,6 +45,35 @@ def add_shelf(request,username,id):
     return redirect(previous_url)
 
 @login_required
+def add_borrow(request,username,id):
+    previous_url = request.META.get('HTTP_REFERER')
+    user = CustomUser.objects.get(username = username)
+    if user == request.user:
+        book = Book.objects.get(id=id)
+        shelf, created = BorrowedBook.objects.get_or_create(user=user)
+        shelf.book.add(book)
+        if shelf.book.all().count() <= 3:
+            if book.status != 'borrowed':
+                book.status = 'borrowed'
+                book.save()
+                book.history.add(user)
+                s = Shelf.objects.get(user=user)
+                s.books.remove(book)
+                s.save()
+                shelf.save()
+                messages.success(request, f"book {book.title} borrowed succesfully")
+                return redirect(previous_url)
+            messages.error(request, f"someone borrowed this book first")
+            return redirect(previous_url)
+
+        shelf.book.remove(book)
+        messages.error(request, f"you can't borrow more then 3 books")
+        return redirect(previous_url)
+
+    messages.error(request, f"you can only borrow from your shelf")
+    return redirect(previous_url)
+
+@login_required
 def remove_shelf(request,username,id):
     previous_url = request.META.get('HTTP_REFERER')
     user = CustomUser.objects.get(username = username)
@@ -56,14 +85,59 @@ def remove_shelf(request,username,id):
         return redirect(previous_url)
     messages.error(request, f"you can only remove from your shelf")
 
+
+@login_required
+def remove_book(request,username,id):
+    previous_url = request.META.get('HTTP_REFERER')
+    user = CustomUser.objects.get(username = username)
+    if user == request.user:
+        book = Book.objects.get(id=id)
+        shelf, created = BorrowedBook.objects.get_or_create(user=user)
+        shelf.book.remove(book)
+        book.status = 'available'
+        book.save()
+        messages.success(request, f"book {book.title} was returned succesfully")
+        return redirect(previous_url)
+    messages.error(request, f"error")
+
 @login_required
 def profile(request,username):
-    return render(request, "pages/user/profile.html",{"username":username})
+    user = request.user
+    favorite, created = Wishlist.objects.get_or_create(user=user)
+    shelf, created = Shelf.objects.get_or_create(user=user)
+    shelfs = BorrowedBook.objects.get(user=user)
+    context = {
+        'user': user,
+        'fav':favorite,
+        'shelf':shelf,
+        'shelfs':shelfs
+    }
+    return render(request, "pages/user/profile.html",context)
 
 @login_required
 def wishlist(request,username):
-    return render(request, "pages/user/wishlist.html",{"username":username})
+    user = request.user
+    favorite, created = Wishlist.objects.get_or_create(user=user)
+    shelf, created = Shelf.objects.get_or_create(user=user)
+    shelfs = Wishlist.objects.get(user=user)
+    context = {
+        'user': user,
+        'fav':favorite,
+        'shelf':shelf,
+        'shelfs':shelfs
+    }
+    return render(request, "pages/user/wishlist.html",context)
 
 @login_required
 def shelf(request,username):
-    return render(request, "pages/user/shelf.html",{"username":username})
+    user = request.user
+    favorite, created = Wishlist.objects.get_or_create(user=user)
+    shelf, created = Shelf.objects.get_or_create(user=user)
+    shelfs = Shelf.objects.get(user=user)
+    context = {
+        'user': user,
+        'fav':favorite,
+        'shelf':shelf,
+        'shelfs':shelfs
+    }
+    return render(request, "pages/user/shelf.html",context)

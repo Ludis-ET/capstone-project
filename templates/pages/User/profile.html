@@ -1,7 +1,7 @@
 {% extends "components/link.html" %} 
 {% block class %}id="off-canvas-right" class="off-canvas-right"{% endblock %} 
 {% load static %} 
-{% block current %}{{username}} / profile{% endblock %} 
+{% block current %}{{user.username}} / profile{% endblock %} 
 {% block rest %}
 <div class="main-content w-100 float-left blog-list" style="margin-bottom: 50px;">
   <div class="container"> 
@@ -180,90 +180,36 @@
           <div id="sidebar-product" class="collapse w-100 float-left">
             <div class="sidebar-block sale products">
               <h3 class="widget-title">Borrowed Books</h3>
+              {% for a in shelfs.book.all %}
               <div class="product-layouts">
                 <div class="product-thumb">
                   <div class="image col-sm-4 float-left">
-                    <a href="#"> <img src="{% static 'img/books/cover1.png' %}" alt="01" /> </a>
+                    <a href="#"> <img src="{{a.coverpage.url}}" alt="01" /> </a>
                   </div>
                   <div class="thumb-description col-sm-8 text-left float-left">
                     <div class="caption">
                       <h4 class="product-title text-capitalize">
-                        <a href="product-details.html"
-                          >aliquam quaerat voluptatem</a
+                        <a href="{% url 'book' a.id %}"
+                          >{{a.title}}</a
                         >
                       </h4>
                     </div>
                     <div class="price">
-                      <div class="product-title text-capitalize">2 day left</div>
+                      <div class="product-title text-capitalize">{{shelfs.borrowed_date}}</div>
                     </div>
                     <div class="w-100 d-flex" style="margin-left: -50%; justify-content: space-between;">
                       
-                      <a type="submit" class="btn btn-primary btn-primary">
+                      <a target="_blank" href="{{a.book.url}}" style="z-index: 10;" class="btn btn-primary btn-primary">
                         read
                       </a>
-                      <a type="submit" class="btn btn-info btn-info " style="color: #fff;">
+                      <a href="{% url 'rembook' user.username a.id %}" class="btn btn-info btn-info " style="color: #fff;">
                         return
                       </a>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="product-layouts">
-                <div class="product-thumb">
-                  <div class="image col-sm-4 float-left">
-                    <a href="#"> <img src="{% static 'img/books/cover1.png' %}" alt="01" /> </a>
-                  </div>
-                  <div class="thumb-description col-sm-8 text-left float-left">
-                    <div class="caption">
-                      <h4 class="product-title text-capitalize">
-                        <a href="product-details.html"
-                          >aliquam quaerat voluptatem</a
-                        >
-                      </h4>
-                    </div>
-                    <div class="price">
-                      <div class="product-title text-capitalize">2 day left</div>
-                    </div>
-                    <div class="w-100 d-flex" style="margin-left: -50%; justify-content: space-between;">
-                      
-                      <a type="submit" class="btn btn-primary btn-primary">
-                        read
-                      </a>
-                      <a type="submit" class="btn btn-info btn-info " style="color: #fff;">
-                        return
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="product-layouts">
-                <div class="product-thumb">
-                  <div class="image col-sm-4 float-left">
-                    <a href="#"> <img src="{% static 'img/books/cover1.png' %}" alt="01" /> </a>
-                  </div>
-                  <div class="thumb-description col-sm-8 text-left float-left">
-                    <div class="caption">
-                      <h4 class="product-title text-capitalize">
-                        <a href="product-details.html"
-                          >aliquam quaerat voluptatem</a
-                        >
-                      </h4>
-                    </div>
-                    <div class="price">
-                      <div class="product-title text-capitalize">2 day left</div>
-                    </div>
-                    <div class="w-100 d-flex" style="margin-left: -50%; justify-content: space-between;">
-                      
-                      <a type="submit" class="btn btn-primary btn-primary">
-                        read
-                      </a>
-                      <a type="submit" class="btn btn-info btn-info " style="color: #fff;">
-                        return
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
             </div>
           </div>
         </div>

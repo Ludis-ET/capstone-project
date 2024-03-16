@@ -41,4 +41,4 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(Wishlist)
-admin.site.register(Shelf)
+admin.site.register(BorrowedBook)

@@ -42,8 +42,8 @@ class Wishlist(models.Model):
         return f"{self.user.username}'s Wishlist"
 
 class BorrowedBook(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    book = models.ForeignKey('core.Book', on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    book = models.ManyToManyField('core.Book',blank = True)
     borrowed_date = models.DateField(auto_now_add=True)
 
     def __str__(self):

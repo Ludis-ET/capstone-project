@@ -31,7 +31,11 @@ def activate(request, uidb64, token):
     return redirect('index')
 
 def index(request):
-    return render(request, "pages/Home/home.html",{})
+    user = request.user
+    context = {
+        'user': user,
+    }
+    return render(request, "pages/Home/home.html", context)
 
 
 def activateEmail(request,user,to):

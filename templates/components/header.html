@@ -61,6 +61,7 @@
             </form>
           </div>
           <div class="user-info">
+            {% if not user.is_authenticated %}
             <a
               href="#"
               class="modal-view button"
@@ -70,6 +71,15 @@
                 >perm_identity</i
               ></a
             >
+            {% else %}
+            <a
+              href="{% url 'profile' user.username %}"
+              class="modal-view button"
+              ><i class="material-icons" style="margin-top: 15px"
+                >perm_identity</i
+              ></a
+            >
+            {% endif %}
             <!-- <div id="user-dropdown" class="user-menu">
                 <ul>
                   <li>

@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.template.loader import render_to_string
@@ -8,10 +7,13 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import send_mail
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .token import account_activation_token
-from user.models import CustomUser
 from django.db.models.query_utils import Q
 from django.contrib.auth.decorators import login_required
+
+from user.models import CustomUser
+from .models import Book
+from .forms import CustomUserCreationForm
+from .token import account_activation_token
 
 def activate(request, uidb64, token):
     User = CustomUser
@@ -33,6 +35,7 @@ def activate(request, uidb64, token):
 
 def index(request):
     user = request.user
+    featured_books = Book.
     context = {
         'user': user,
     }

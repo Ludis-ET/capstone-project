@@ -13,7 +13,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 
 from user.models import CustomUser,Wishlist,Shelf
-from .models import Book
+from .models import *
 from .forms import CustomUserCreationForm
 from .token import account_activation_token
 
@@ -117,9 +117,27 @@ def login(request):
 def shelf(request):
     user = request.user
     books_list = Book.objects.all()
+    genres = Genre.objects.all()
     sort_by = request.GET.get('sort')
     if sort_by == 'p-name':
         books_list = sorted(books_list, key=lambda x: x.history.count(), reverse=True)
+
+    genre = request.GET.get('genre')
+    if genre:
+        books_list = books_list.filter(genres__name=genre)
+
+    availability = request.GET.get('availability')
+    if availability:
+        books_list = books_list.filter(status=availability)
+
+    rating = request.GET.get('rating')
+    if rating:
+        if rating == '4+':
+            books_list = [book for book in books_list if book.average_rating >= 4]
+        elif rating == '3+':
+            books_list = [book for book in books_list if book.average_rating >= 3]
+        elif rating == '2+':
+            books_list = [book for book in books_list if book.average_rating >= 2]
     items_per_page = int(request.GET.get('number', 9))
 
     paginator = Paginator(books_list, items_per_page)
@@ -133,7 +151,8 @@ def shelf(request):
         'fav':favorite,
         'shelf':shelf,
         'books': page_obj,
-        'items_per_page':items_per_page
+        'items_per_page':items_per_page,
+        'genres':genres
     }
     return render(request, "pages/shelf/shelf.html",context)
 

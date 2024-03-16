@@ -401,110 +401,91 @@
         </div>
         
         </div>
-        <div class="left-column sidebar-canvas order-lg-1">
-          <span class="close-filter"></span>
-          <div class="sidebar-inner w-100 float-left">
-            <div class="sidebar-filter left-sidebar-canvas w-100 float-left">
-              <div class="title">
-                <a
+        <!-- all_books.html -->
+
+<div class="left-column sidebar-canvas order-lg-1">
+  <span class="close-filter"></span>
+  <div class="sidebar-inner w-100 float-left">
+      <div class="sidebar-filter left-sidebar-canvas w-100 float-left">
+          <div class="title">
+              <a
                   data-toggle="collapse"
                   href="#sidebar-main"
                   aria-expanded="false"
                   aria-controls="sidebar-main"
                   class="d-lg-none block-toggler"
-                  >Genre</a
-                >
-              </div>
-              <div id="sidebar-main" class="sidebar-main collapse">
-                <div class="sidebar-block categories">
-                  <h3 class="widget-title">
-                    <a
-                      data-toggle="collapse"
-                      href="#categoriesMenu"
-                      role="button"
-                      aria-expanded="true"
-                      aria-controls="categoriesMenu"
-                      >Genre</a
-                    >
-                  </h3>
-                  <div id="categoriesMenu" class="expand-lg collapse show">
-                    <div class="nav nav-pills flex-column mt-4">
-                      <a
-                        href="#"
-                        class="nav-link d-flex justify-content-between mb-2 active"
-                        ><span>Scifi</span
-                        ><span class="sidebar-badge"> 55</span></a
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="sidebar-block price">
-                  <h3 class="widget-title">
-                    <a
-                      data-toggle="collapse"
-                      href="#price"
-                      role="button"
-                      aria-expanded="true"
-                      aria-controls="price"
-                      >Availability</a
-                    >
-                  </h3>
-                  <div id="price" class="collapse show">
-                    <div class="price-inner">
-                      <label for="amount">Price range:</label>
-                      Available <input
-                        type="radio"
-                        id="amount"
-                        readonly
-                        style="border: 0; font-weight: bold; background: none"
-                      />
-                      Not Available <input
-                        type="radio"
-                        id="amount"
-                        readonly
-                        style="border: 0; font-weight: bold; background: none"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="sidebar-block color">
-                  <h3 class="widget-title">
-                    <a
-                      data-toggle="collapse"
-                      href="#color"
-                      role="button"
-                      aria-expanded="true"
-                      aria-controls="color"
-                      >Rating</a
-                    >
-                  </h3>
-                  <div id="price" class="collapse show">
-                    <div class="price-inner">
-                      4 and above <input
-                        type="radio"
-                        id="amount"
-                        readonly
-                        style="border: 0; font-weight: bold; background: none"
-                      /> <br>
-                      3 and above <input
-                        type="radio"
-                        id="amount"
-                        readonly
-                        style="border: 0; font-weight: bold; background: none"
-                      /> <br>
-                      2 and above <input
-                        type="radio"
-                        id="amount"
-                        readonly
-                        style="border: 0; font-weight: bold; background: none"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  >Filter</a
+              >
           </div>
-        </div>
+          <div id="sidebar-main" class="sidebar-main collapse">
+              <form action="" method="get">
+                  <div class="sidebar-block categories">
+                      <h3 class="widget-title">
+                          <a
+                              data-toggle="collapse"
+                              href="#categoriesMenu"
+                              role="button"
+                              aria-expanded="true"
+                              aria-controls="categoriesMenu"
+                              >Genre</a
+                          >
+                      </h3>
+                      <div id="categoriesMenu" class="expand-lg collapse show">
+                          <div class="nav nav-pills flex-column mt-4">
+                              {% for genre in genres %}
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" name="genre" value="{{ genre.name }}" id="genre{{ forloop.counter }}">
+                                  <label class="form-check-label" for="genre{{ forloop.counter }}">
+                                      {{ genre.name }}
+                                      <span class="sidebar-badge"> {{ genre.book_set.count }}</span>
+                                  </label>
+                              </div>
+                              {% endfor %}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="sidebar-block price">
+                      <h3 class="widget-title">Availability</h3>
+                      <div class="price-inner">
+                          <div class="form-check">
+                              <input class="form-check-input" type="checkbox" name="availability" value="available" id="available">
+                              <label class="form-check-label" for="available">Available</label>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input" type="checkbox" name="availability" value="borrowed" id="borrowed">
+                              <label class="form-check-label" for="borrowed">Not Available</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="sidebar-block color">
+                      <h3 class="widget-title">Rating</h3>
+                      <div class="price-inner">
+                          <div class="form-check">
+                              <input class="form-check-input" type="radio" name="rating" value="4+" id="rating4">
+                              <label class="form-check-label" for="rating4">4 and above</label>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input" type="radio" name="rating" value="3+" id="rating3">
+                              <label class="form-check-label" for="rating3">3 and above</label>
+                          </div>
+                          <div class="form-check">
+                              <input class="form-check-input" type="radio" name="rating" value="2+" id="rating2">
+                              <label class="form-check-label" for="rating2">2 and above</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="sidebar-block">
+                      <button type="submit" class="btn btn-primary">Apply Filters</button>
+                      <a href="{% url 'shelf' %}" class="btn btn-secondary">Reset</a>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Pagination code remains the same as provided earlier -->
+
       </div>
     </div>
 </div>

@@ -51,7 +51,7 @@ def activateEmail(request,user,to):
     
     try:
         send_mail(mail_subject, message, None, [to], html_message=message)
-        messages.success(request, f'{user} account created successfully! Check {to} and confirm your account.')
+        messages.success(request, f"{user}'s account is created successfully! Check {to} and confirm your account.")
     except Exception as e:
         messages.error(request, f'Problem sending email to <b>{to}</b>. Please try again. Error: {str(e)}')
 

@@ -4,12 +4,25 @@ from django.conf import settings
 
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
     is_author = models.BooleanField(default=False, verbose_name= "is an Author")
     is_manager = models.BooleanField(default=False, verbose_name= "is a Manager")
 
     class Meta:
         verbose_name = "Person"
         verbose_name_plural = "People"
+
+    def save(self, *args, **kwargs):
+        if self.is_author and not self.is_manager:
+            self.is_staff = True
+            self.is_superuser = False
+        elif self.is_manager and not self.is_author:
+            self.is_staff = True
+            self.is_superuser = True
+        else:
+            self.is_staff = self.is_author
+            self.is_superuser = self.is_manager
+        super().save(*args, **kwargs)
 
 
 class Shelf(models.Model):

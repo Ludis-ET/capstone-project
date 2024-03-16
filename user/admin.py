@@ -21,18 +21,21 @@ class UserAdmin(admin.ModelAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
     fieldsets = (
-        (None, {'fields': ('username', 'password', 'is_author', 'is_manager')}),
-        ('Permissions', {'fields': ('is_active',)}),
+        ("user identities", {'fields': ('username', 'password', 'is_author', 'is_manager')}),
+        ("additional identities", {'fields': ('first_name', 'last_name', 'email')}),
+        ('Permissions', {'fields': ('groups','is_active',)}),
     )
     add_fieldsets = (
         ("Base User", {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'is_author', 'is_manager', 'is_active'),
+            'fields': ('first_name', 'last_name', 'username','email', 'password1', 'password2', 'is_author', 'is_manager', 'is_active'),
         }),
     )
 
     def type_of_user(self, user):
+        if user.is_author and user.is_manager:
+            return 'manager'
         if user.is_author:
             return 'author'
-        return 'manager'
+        return 'unknown'
 

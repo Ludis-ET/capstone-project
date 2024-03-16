@@ -1,6 +1,6 @@
 {% extends "components/link.html" %} {% block class %}id="off-canvas-right"
 class="off-canvas-right"{% endblock %} {% load static %} {% block current %}
-Shelf / Book{% endblock %} {% block rest %}
+Shelf / {{book.title}}{% endblock %} {% block rest %}
 <div class="product-deatils-section float-left w-100">
   <div class="container">
     <div class="row">
@@ -13,9 +13,9 @@ Shelf / Book{% endblock %} {% block rest %}
             aria-labelledby="product-tab-01"
           >
             <div class="single-img img-full">
-              <a href="{% static 'img/books/cover1.png' %}"
+              <a href="{{book.coverpage.url}}"
                 ><img
-                  src="{% static 'img/books/cover1.png' %}"
+                  src="{{book.coverpage.url}}"
                   class="img-fluid zoomImg"
                   alt=""
               /></a>
@@ -28,9 +28,9 @@ Shelf / Book{% endblock %} {% block rest %}
             aria-labelledby="product-tab-02"
           >
             <div class="single-img">
-              <a href="{% static 'img/books/cover1.png' %}"
+              <a href="{{book.coverpage.url}}"
                 ><img
-                  src="{% static 'img/books/cover1.png' %}"
+                  src="{{book.coverpage.url}}"
                   class="img-fluid"
                   alt=""
               /></a>
@@ -58,60 +58,76 @@ Shelf / Book{% endblock %} {% block rest %}
         <div class="product-information">
           <h4 class="product-title text-capitalize float-left w-100">
             <a href="product-details.html" class="float-left w-100"
-              >aliquam quaerat voluptatem</a
+              >{{book.title}}</a
             >
           </h4>
           <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis
-            viverra purus, non viverra nulla. Sed vehicula libero eu lectus
-            eleifend volutpat. Sed et placerat arcu. Proin mi leo, interdum eu
-            tortor at, euismod gravida velit. Fusce non enim lectus. Duis
-            euismod, lorem vitae pharetra rhoncus, ligula risus elementum nunc,
-            at interdum eros nunc eget augue. Donec dapibus nec diam ut tempor.
-            Duis malesuada neque turpis, ut congue ipsum euismod eget. Sed
-            egestas ipsum enim, sed semper magna auctor non.
+            {{book.description}}
           </div>
           <div class="rating">
             <div class="product-ratings d-inline-block align-middle">
-              <span class="fa fa-stack"
-                ><i class="material-icons">star</i></span
-              >
-              <span class="fa fa-stack"
-                ><i class="material-icons">star</i></span
-              >
-              <span class="fa fa-stack"
-                ><i class="material-icons">star</i></span
-              >
-              <span class="fa fa-stack"
-                ><i class="material-icons off">star</i></span
-              >
-              <span class="fa fa-stack"
-                ><i class="material-icons off">star</i></span
-              >
+                        {% for i in "12345" %}
+                          {% if i <= book.average_rating %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons">star</i>
+                            </span>
+                          {% else %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons off">star</i>
+                            </span>
+                          {% endif %}
+                        {% endfor %}
             </div>
-            (3)
+            ({{book.total_rating}})
           </div>
           <div class="price float-left w-100 d-flex">
-            <div class="regular-price">150</div>
+            <div class="regular-price">{{book.history.all.count}}</div>
             <div class="regilar-price">people borrowed it</div>
+          </div>
+          <div class="price float-left w-100 d-flex">
+            <div class="regular-price">{{book.views}}</div>
+            <div class="regilar-price">people liked it</div>
           </div>
           <div class="product-variants float-left w-100"></div>
           <div class="btn-cart d-flex align-items-center float-left w-100">
-            <button
-              type="button"
-              class="btn btn-primary btn-cart m-0"
-              data-target="#cart-pop"
-              data-toggle="modal"
-            >
-              <i class="material-icons">shelves</i> Add To my shelf
-            </button>
+            
+            {% if user.is_authenticated %}
+                {% if book in shelf.books.all %}
+                    <a
+                      href="{% url 'remshelf' user.username book.id %}"
+                      class="btn btn-danger btn-cart m-0"
+                    >
+                      <i class="material-icons">delete</i> Remove from my shelf
+                    </a>
+                {% else %}
+                    <a
+                      href="{% url 'addshelf' user.username book.id %}"
+                      class="btn btn-primary btn-cart m-0"
+                    >
+                      <i class="material-icons">shelves</i> Add to my shelf
+                    </a>
+                {% endif %}
+            {% endif %}
           </div>
-          <div
-            class="tt-links d-flex align-items-center float-left w-100 mb-15"
-          >
-            <a href="wishlist.html" class="link btn-wishlist"
-              ><i class="material-icons">favorite</i><span>wishlist</span></a
-            >
+          <div class="btn-cart d-flex align-items-center float-left w-100">
+            
+            {% if user.is_authenticated %}
+                {% if book in fav.books.all %}
+                    <a
+                      href="{% url 'remwish' user.username book.id %}"
+                      class="btn btn-danger btn-cart m-0"
+                    >
+                      <i class="material-icons">delete</i> Remove from my favorite
+                    </a>
+                {% else %}
+                    <a
+                      href="{% url 'addwish' user.username book.id %}"
+                      class="btn btn-primary btn-cart m-0"
+                    >
+                      <i class="material-icons">favorite</i> Add to my favorite
+                    </a>
+                {% endif %}
+            {% endif %}
           </div>
         </div>
       </div>
@@ -133,7 +149,7 @@ Shelf / Book{% endblock %} {% block rest %}
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#product-tab2" id="tab2"
-            ><div class="tab-title">Reviews (2)</div></a
+            ><div class="tab-title">Reviews ({{book.total_rating}})</div></a
           >
         </li>
       </ul>
@@ -146,20 +162,7 @@ Shelf / Book{% endblock %} {% block rest %}
         aria-labelledby="tab1"
       >
         <div class="description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis
-          viverra purus, non viverra nulla. Sed vehicula libero eu lectus
-          eleifend volutpat. Sed et placerat arcu. Proin mi leo, interdum eu
-          tortor at, euismod gravida velit. Fusce non enim lectus. Duis euismod,
-          lorem vitae pharetra rhoncus, ligula risus elementum nunc, at interdum
-          eros nunc eget augue. Donec dapibus nec diam ut tempor. Duis malesuada
-          neque turpis, ut congue ipsum euismod eget. Sed egestas ipsum enim,
-          sed semper magna auctor non. Praesent risus nunc, ultricies vel velit
-          nec, fringilla venenatis sem. Nunc condimentum, elit sed posuere
-          accumsan, mauris nisl ornare metus, nec hendrerit quam velit ut nibh.
-          Vivamus sodales neque vel sodales porta. Mauris hendrerit felis in mi
-          auctor posuere. Mauris a consequat sapien, eget condimentum risus.
-          Curabitur iaculis lorem non pretium varius. In hac habitasse platea
-          dictumst.
+          {{book.description}}
         </div>
       </div>
       <div

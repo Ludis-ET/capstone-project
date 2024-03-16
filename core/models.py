@@ -47,6 +47,10 @@ class Book(models.Model):
             return total_ratings / len(reviews)
         else:
             return 0
+    
+    @property
+    def total_rating(self):
+        return self.review_set.all().count()
 
 class Review(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)

@@ -161,12 +161,14 @@ def shelf(request):
 
 def book(request,id):
     user = request.user
+    book = Book.objects.get(id=id)
     favorite, created = Wishlist.objects.get_or_create(user=user)
     shelf, created = Shelf.objects.get_or_create(user=user)
     context = {
         'user': user,
         'fav':favorite,
-        'shelf':shelf
+        'shelf':shelf,
+        'book':book,
     }
     return render(request, "pages/shelf/BookDetail.html",context)
 

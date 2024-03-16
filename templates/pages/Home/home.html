@@ -89,7 +89,7 @@
                     <div class="thumb-description">
                       <div class="caption">
                         <h4 class="product-title text-capitalize">
-                          <a href="{% url 'book' 1 %}"
+                          <a href="{% url 'book' book.id %}"
                             >{{book.title}}</a
                           >
                         </h4>
@@ -178,7 +178,7 @@
                             ><span>wishlist</span></a>
 
                           <a
-                            href="{% url 'book' 1 %}"
+                            href="{% url 'book' book.id %}"
                             type="button"
                             class="btn btn-primary btn-quickview"
                             data-toggle="modal"
@@ -242,7 +242,7 @@
                     <div class="thumb-description">
                       <div class="caption">
                         <h4 class="product-title text-capitalize">
-                          <a href="{% url 'book' 1 %}"
+                          <a href="{% url 'book' book.id %}"
                             >{{book.title}}</a
                           >
                         </h4>
@@ -331,7 +331,7 @@
                             ><span>wishlist</span></a>
 
                           <a
-                            href="{% url 'book' 1 %}"
+                            href="{% url 'book' book.id %}"
                             type="button"
                             class="btn btn-primary btn-quickview"
                             data-toggle="modal"
@@ -397,7 +397,7 @@
                   <div class="thumb-description">
                     <div class="caption">
                       <h4 class="product-title text-capitalize">
-                        <a href="{% url 'book' 1 %}"
+                        <a href="{% url 'book' book.id %}"
                           >{{book.title}}</a
                         >
                       </h4>
@@ -486,7 +486,7 @@
                           ><span>wishlist</span></a>
 
                         <a
-                          href="{% url 'book' 1 %}"
+                          href="{% url 'book' book.id %}"
                           type="button"
                           class="btn btn-primary btn-quickview"
                           data-toggle="modal"

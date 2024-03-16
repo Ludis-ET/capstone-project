@@ -20,7 +20,7 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ['title','views', 'status', 'author','borrowed_users_count']
     list_filter = ['genres','status', 'author']
     search_fields = ['title__istartswith']
-    exclude = ('views', 'status')
+    exclude = ('views', 'status','history')
 
     def borrowed_users_count(self, obj):
         return obj.history.count()

@@ -33,9 +33,12 @@ class UserAdmin(BaseUserAdmin):
     )
 
     def type_of_user(self, user):
-        if not user.is_author and user.is_manager:
+        if user.is_superuser:
             return 'manager'
-        if  user.is_author and not user.is_manager:
+        if  user.is_staff and not user.is_superuser:
             return 'author'
-        return 'unknown'
+        return 'Student'
 
+
+admin.site.register(Wishlist)
+admin.site.register(Shelf)

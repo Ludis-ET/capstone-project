@@ -118,22 +118,25 @@
                 <li>
                   <table class="table table-striped">
                     <tbody>
+                      {% if not shelf.books.all %}
                       <tr>
                         <td>No book available</td>
                       </tr>
-                      <!-- <tr>
+                      {% else %}
+                      {% for book in shelf.books.all %}
+                      <tr>
                         <td class="text-center">
                           <a href="#"
                             ><img
-                              src="{% static 'img/books/cover1.png' %}"
+                              src="{{book.coverpage.url}}"
                               alt="01"
                               title="01"
                           /></a>
                         </td>
                         <td class="text-left product-name">
-                          <a href="#">A Clash of Kings</a>
+                          <a href="#">{{book.title}}</a>
                           <div class="quantity float-left w-100">
-                            <span class="cart-qty">George R.R martin</span>
+                            <span class="cart-qty">By{{book.author.first_name}} {{book.author.last_name}}</span>
                           </div>
                         </td>
                         <td class="text-center close">
@@ -141,7 +144,9 @@
                             ><i class="material-icons">close</i></a
                           >
                         </td>
-                      </tr> -->
+                      </tr>
+                      {% endfor %}
+                      {% endif %}
                     </tbody>
                   </table>
                 </li>

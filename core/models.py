@@ -13,7 +13,7 @@ class Genre(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length = 200)
-    cover_page = models.ImageField(upload_to='cover pages/',null=True)
+    coverpage = models.ImageField(upload_to='coverpages/',null=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.PROTECT, null = True)
     genres = models.ManyToManyField(Genre)
     book = models.FileField(upload_to='books/')

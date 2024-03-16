@@ -52,16 +52,17 @@
                 class="ttfeatured-content products grid owl-carousel"
                 id="owl1"
               >
+              {% for book in featured %}
                 <div class="product-layouts">
                   <div class="product-thumb">
                     <div class="image vertical_scrolling_bottom_to_top">
-                      <a href="{% url 'book' 1 %}">
+                      <a href="{% url 'book' book.id %}">
                         <img
-                          src="{% static 'img/books/cover1.png' %}"
+                          src="{{book.coverpage.url}}"
                           alt="01"
                         />
                         <img
-                          src="{% static 'img/books/cover1.png' %}"
+                          src="{{book.coverpage.url}}"
                           alt="02"
                           class="second_image img-responsive"
                         />
@@ -89,7 +90,7 @@
                       <div class="caption">
                         <h4 class="product-title text-capitalize">
                           <a href="{% url 'book' 1 %}"
-                            >aliquam quaerat voluptatem</a
+                            >{{book.title}}</a
                           >
                         </h4>
                       </div>
@@ -97,30 +98,26 @@
                         <div
                           class="product-ratings d-inline-block align-middle"
                         >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
+                        {% for i in "12345" %}
+                          {% if i <= book.average_rating %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons">star</i>
+                            </span>
+                          {% else %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons off">star</i>
+                            </span>
+                          {% endif %}
+                        {% endfor %}
                         </div>
                       </div>
                       <div class="price">
                         <div class="regular-price">
                           <div class="badge">
-                            <i class="material-icons">group</i> 235
+                            <i class="material-icons">group</i> {{book.history.count}}
                           </div>
                           <div class="badge">
-                            <i class="material-icons">visibility</i> 235
+                            <i class="material-icons">visibility</i> {{book.views}}
                           </div>
                         </div>
                       </div>
@@ -131,17 +128,54 @@
                             class="btn btn-primary btn-cart"
                             data-target="#cart-pop"
                             data-toggle="modal"
+                            {% if book.status != 'available' %}
                             disabled="disabled"
+                            {% endif %}
+                          ><a style="text-decoration: none; color: #fff;"
+                          onmouseover="this.style.color='black';"
+                          onmouseout="this.style.color='#fff';"
+                          {% if user.is_authenticated %}
+                              {% if book in shelf.books.all %}
+                              href="{% url 'remshelf' user.username book.id %}"
+                              {% else %}
+                              href="{% url 'addshelf' user.username book.id %}"
+                              {% endif %}
+                            {% endif %}
                           >
-                            <i class="material-icons">shelves</i
-                            ><span>Add to shelf</span>
+                            <i class="material-icons">
+                              {% if user.is_authenticated %}
+                                {% if book in shelf.books.all %}
+                                delete
+                                {% else %}
+                                shelves
+                                {% endif %}
+                              {% else %}
+                              shelves
+                              {% endif %}
+                              </i><span>Add to shelf</span>
+                          </a>
                           </button>
                           <a
-                            href="wishlist.html"
+                            {% if user.is_authenticated %}
+                              {% if book in fav.books.all %}
+                              href="{% url 'remwish' user.username book.id %}"
+                              {% else %}
+                              href="{% url 'addwish' user.username book.id %}"
+                              {% endif %}
+                            {% endif %}
                             class="btn btn-primary btn-wishlist"
-                            ><i class="material-icons">favorite</i
-                            ><span>wishlist</span></a
-                          >
+                            ><i class="material-icons">
+                              {% if user.is_authenticated %}
+                                {% if book in fav.books.all %}
+                                thumb_down
+                                {% else %}
+                                thumb_up
+                                {% endif %}
+                              {% else %}
+                              sentiment_dissatisfied
+                              {% endif %}
+                              </i
+                            ><span>wishlist</span></a>
 
                           <a
                             href="{% url 'book' 1 %}"
@@ -158,6 +192,7 @@
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </section>
           </div>
@@ -169,44 +204,46 @@
           >
             <section id="ttnew" class="ttnew-products">
               <div class="ttnew-content products grid owl-carousel" id="owl2">
+                <!-- {% for book in} -->
+                {% for book in latest %}
                 <div class="product-layouts">
                   <div class="product-thumb">
                     <div class="image vertical_scrolling_bottom_to_top">
-                      <a href="product-details.html">
+                      <a href="{% url 'book' book.id %}">
                         <img
-                          src="{% static 'img/books/cover1.png' %}"
+                          src="{{book.coverpage.url}}"
                           alt="01"
                         />
                         <img
-                          src="{% static 'img/books/cover1.png' %}"
+                          src="{{book.coverpage.url}}"
                           alt="02"
                           class="second_image img-responsive"
                         />
                       </a>
                       <!-- <ul class="countdown1 countdown">
-                      <li>
-                        <span class="days">10</span>
-                        <p class="days_text">Days</p>
-                      </li>
-                      <li>
-                        <span class="hours">00</span>
-                        <p class="hours_text">Hours</p>
-                      </li>
-                      <li>
-                        <span class="minutes">00</span>
-                        <p class="minutes_text">Minutes</p>
-                      </li>
-                      <li>
-                        <span class="seconds">00</span>
-                        <p class="seconds_text">Seconds</p>
-                      </li>
-                    </ul> -->
+                          <li>
+                            <span class="days">10</span>
+                            <p class="days_text">Days</p>
+                          </li>
+                          <li>
+                            <span class="hours">00</span>
+                            <p class="hours_text">Hours</p>
+                          </li>
+                          <li>
+                            <span class="minutes">00</span>
+                            <p class="minutes_text">Minutes</p>
+                          </li>
+                          <li>
+                            <span class="seconds">00</span>
+                            <p class="seconds_text">Seconds</p>
+                          </li>
+                        </ul> -->
                     </div>
                     <div class="thumb-description">
                       <div class="caption">
                         <h4 class="product-title text-capitalize">
-                          <a href="product-details.html"
-                            >aliquam quaerat voluptatem</a
+                          <a href="{% url 'book' 1 %}"
+                            >{{book.title}}</a
                           >
                         </h4>
                       </div>
@@ -214,26 +251,27 @@
                         <div
                           class="product-ratings d-inline-block align-middle"
                         >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
+                        {% for i in "12345" %}
+                          {% if i <= book.average_rating %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons">star</i>
+                            </span>
+                          {% else %}
+                            <span class="fa fa-stack">
+                              <i class="material-icons off">star</i>
+                            </span>
+                          {% endif %}
+                        {% endfor %}
                         </div>
                       </div>
                       <div class="price">
                         <div class="regular-price">
-                          <i class="material-icons">group</i> 235
+                          <div class="badge">
+                            <i class="material-icons">group</i> {{book.history.count}}
+                          </div>
+                          <div class="badge">
+                            <i class="material-icons">visibility</i> {{book.views}}
+                          </div>
                         </div>
                       </div>
                       <div class="button-wrapper">
@@ -243,19 +281,57 @@
                             class="btn btn-primary btn-cart"
                             data-target="#cart-pop"
                             data-toggle="modal"
+                            {% if book.status != 'available' %}
                             disabled="disabled"
+                            {% endif %}
+                          ><a style="text-decoration: none; color: #fff;"
+                          onmouseover="this.style.color='black';"
+                          onmouseout="this.style.color='#fff';"
+                          {% if user.is_authenticated %}
+                              {% if book in shelf.books.all %}
+                              href="{% url 'remshelf' user.username book.id %}"
+                              {% else %}
+                              href="{% url 'addshelf' user.username book.id %}"
+                              {% endif %}
+                            {% endif %}
                           >
-                            <i class="material-icons">shelves</i
-                            ><span>Add to shelf</span>
+                            <i class="material-icons">
+                              {% if user.is_authenticated %}
+                                {% if book in shelf.books.all %}
+                                delete
+                                {% else %}
+                                shelves
+                                {% endif %}
+                              {% else %}
+                              shelves
+                              {% endif %}
+                              </i><span>Add to shelf</span>
+                          </a>
                           </button>
                           <a
-                            href="wishlist.html"
+                            {% if user.is_authenticated %}
+                              {% if book in fav.books.all %}
+                              href="{% url 'remwish' user.username book.id %}"
+                              {% else %}
+                              href="{% url 'addwish' user.username book.id %}"
+                              {% endif %}
+                            {% endif %}
                             class="btn btn-primary btn-wishlist"
-                            ><i class="material-icons">favorite</i
-                            ><span>wishlist</span></a
-                          >
+                            ><i class="material-icons">
+                              {% if user.is_authenticated %}
+                                {% if book in fav.books.all %}
+                                thumb_down
+                                {% else %}
+                                thumb_up
+                                {% endif %}
+                              {% else %}
+                              sentiment_dissatisfied
+                              {% endif %}
+                              </i
+                            ><span>wishlist</span></a>
 
-                          <button
+                          <a
+                            href="{% url 'book' 1 %}"
                             type="button"
                             class="btn btn-primary btn-quickview"
                             data-toggle="modal"
@@ -263,12 +339,13 @@
                           >
                             <i class="material-icons">visibility</i
                             ><span>Quick View</span>
-                          </button>
+                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </section>
           </div>
@@ -283,106 +360,147 @@
                 class="ttbestseller-content products grid owl-carousel"
                 id="owl3"
               >
-                <div class="product-layouts">
-                  <div class="product-thumb">
-                    <div class="image vertical_scrolling_bottom_to_top">
-                      <a href="product-details.html">
-                        <img
-                          src="{% static 'img/books/cover1.png' %}"
-                          alt="01"
-                        />
-                        <img
-                          src="{% static 'img/books/cover1.png' %}"
-                          alt="02"
-                          class="second_image img-responsive"
-                        />
-                      </a>
-                      <!-- <ul class="countdown1 countdown">
-                      <li>
-                        <span class="days">10</span>
-                        <p class="days_text">Days</p>
-                      </li>
-                      <li>
-                        <span class="hours">00</span>
-                        <p class="hours_text">Hours</p>
-                      </li>
-                      <li>
-                        <span class="minutes">00</span>
-                        <p class="minutes_text">Minutes</p>
-                      </li>
-                      <li>
-                        <span class="seconds">00</span>
-                        <p class="seconds_text">Seconds</p>
-                      </li>
-                    </ul> -->
-                    </div>
-                    <div class="thumb-description">
-                      <div class="caption">
-                        <h4 class="product-title text-capitalize">
-                          <a href="product-details.html"
-                            >aliquam quaerat voluptatem</a
-                          >
-                        </h4>
-                      </div>
-                      <div class="rating">
-                        <div
-                          class="product-ratings d-inline-block align-middle"
+              {% for book in demanding %}
+              <div class="product-layouts">
+                <div class="product-thumb">
+                  <div class="image vertical_scrolling_bottom_to_top">
+                    <a href="{% url 'book' book.id %}">
+                      <img
+                        src="{{book.coverpage.url}}"
+                        alt="01"
+                      />
+                      <img
+                        src="{{book.coverpage.url}}"
+                        alt="02"
+                        class="second_image img-responsive"
+                      />
+                    </a>
+                    <!-- <ul class="countdown1 countdown">
+                        <li>
+                          <span class="days">10</span>
+                          <p class="days_text">Days</p>
+                        </li>
+                        <li>
+                          <span class="hours">00</span>
+                          <p class="hours_text">Hours</p>
+                        </li>
+                        <li>
+                          <span class="minutes">00</span>
+                          <p class="minutes_text">Minutes</p>
+                        </li>
+                        <li>
+                          <span class="seconds">00</span>
+                          <p class="seconds_text">Seconds</p>
+                        </li>
+                      </ul> -->
+                  </div>
+                  <div class="thumb-description">
+                    <div class="caption">
+                      <h4 class="product-title text-capitalize">
+                        <a href="{% url 'book' 1 %}"
+                          >{{book.title}}</a
                         >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
-                          <span class="fa fa-stack"
-                            ><i class="material-icons off">star</i></span
-                          >
+                      </h4>
+                    </div>
+                    <div class="rating">
+                      <div
+                        class="product-ratings d-inline-block align-middle"
+                      >
+                      {% for i in "12345" %}
+                        {% if i <= book.average_rating %}
+                          <span class="fa fa-stack">
+                            <i class="material-icons">star</i>
+                          </span>
+                        {% else %}
+                          <span class="fa fa-stack">
+                            <i class="material-icons off">star</i>
+                          </span>
+                        {% endif %}
+                      {% endfor %}
+                      </div>
+                    </div>
+                    <div class="price">
+                      <div class="regular-price">
+                        <div class="badge">
+                          <i class="material-icons">group</i> {{book.history.count}}
+                        </div>
+                        <div class="badge">
+                          <i class="material-icons">visibility</i> {{book.views}}
                         </div>
                       </div>
-                      <div class="price">
-                        <div class="regular-price">
-                          <i class="material-icons">group</i> 235
-                        </div>
-                      </div>
-                      <div class="button-wrapper">
-                        <div class="button-group text-center">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-cart"
-                            data-target="#cart-pop"
-                            data-toggle="modal"
-                            disabled="disabled"
-                          >
-                            <i class="material-icons">shelves</i
-                            ><span>Add to shelf</span>
-                          </button>
-                          <a
-                            href="wishlist.html"
-                            class="btn btn-primary btn-wishlist"
-                            ><i class="material-icons">favorite</i
-                            ><span>wishlist</span></a
-                          >
+                    </div>
+                    <div class="button-wrapper">
+                      <div class="button-group text-center">
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-cart"
+                          data-target="#cart-pop"
+                          data-toggle="modal"
+                          {% if book.status != 'available' %}
+                          disabled="disabled"
+                          {% endif %}
+                        ><a style="text-decoration: none; color: #fff;"
+                        onmouseover="this.style.color='black';"
+                        onmouseout="this.style.color='#fff';"
+                        {% if user.is_authenticated %}
+                            {% if book in shelf.books.all %}
+                            href="{% url 'remshelf' user.username book.id %}"
+                            {% else %}
+                            href="{% url 'addshelf' user.username book.id %}"
+                            {% endif %}
+                          {% endif %}
+                        >
+                          <i class="material-icons">
+                            {% if user.is_authenticated %}
+                              {% if book in shelf.books.all %}
+                              delete
+                              {% else %}
+                              shelves
+                              {% endif %}
+                            {% else %}
+                            shelves
+                            {% endif %}
+                            </i><span>Add to shelf</span>
+                        </a>
+                        </button>
+                        <a
+                          {% if user.is_authenticated %}
+                            {% if book in fav.books.all %}
+                            href="{% url 'remwish' user.username book.id %}"
+                            {% else %}
+                            href="{% url 'addwish' user.username book.id %}"
+                            {% endif %}
+                          {% endif %}
+                          class="btn btn-primary btn-wishlist"
+                          ><i class="material-icons">
+                            {% if user.is_authenticated %}
+                              {% if book in fav.books.all %}
+                              thumb_down
+                              {% else %}
+                              thumb_up
+                              {% endif %}
+                            {% else %}
+                            sentiment_dissatisfied
+                            {% endif %}
+                            </i
+                          ><span>wishlist</span></a>
 
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-quickview"
-                            data-toggle="modal"
-                            data-target="#product_view"
-                          >
-                            <i class="material-icons">visibility</i
-                            ><span>Quick View</span>
-                          </button>
-                        </div>
+                        <a
+                          href="{% url 'book' 1 %}"
+                          type="button"
+                          class="btn btn-primary btn-quickview"
+                          data-toggle="modal"
+                          data-target="#product_view"
+                        >
+                          <i class="material-icons">visibility</i
+                          ><span>Quick View</span>
+                        </a>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              {% endfor %}
               </div>
             </section>
           </div>

@@ -11,10 +11,14 @@ from django.db.models.query_utils import Q
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 
-from user.models import CustomUser
+from user.models import CustomUser,Wishlist,Shelf
 from .models import Book
 from .forms import CustomUserCreationForm
 from .token import account_activation_token
+
+# django orm
+
+
 
 def activate(request, uidb64, token):
     User = CustomUser
@@ -37,13 +41,17 @@ def activate(request, uidb64, token):
 def index(request):
     user = request.user
     demanding_books = Book.objects.annotate(borrowed_users_count=Count('history')).order_by('-borrowed_users_count')
-    latest_books = Book.objects.order_by('-date_updated')
-    featured_books = Book.objects.order_by('-views')
+    latest_books = Book.objects.all().order_by('-date_updated')
+    featured_books = Book.objects.all().order_by('-views')
+    favorite, created = Wishlist.objects.get_or_create(user=user)
+    shelf, created = Shelf.objects.get_or_create(user=user)
     context = {
         'user': user,
         'demanding':demanding_books,
         'latest':latest_books,
         'featured':featured_books,
+        'fav':favorite,
+        'shelf':shelf
     }
     return render(request, "pages/Home/home.html", context)
 

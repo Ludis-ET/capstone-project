@@ -111,7 +111,7 @@
           <div class="cart-wrapper">
             <button type="button" class="btn">
               <i class="material-icons">shelves</i>
-              <span class="ttcount">0</span>
+              <span class="ttcount">{{shelf.books.all.count}}</span>
             </button>
             <div id="cart-dropdown" class="cart-menu">
               <ul class="w-100 float-left">
@@ -126,7 +126,7 @@
                       {% for book in shelf.books.all %}
                       <tr>
                         <td class="text-center">
-                          <a href="#"
+                          <a href="{% url 'book' book.id %}"
                             ><img
                               src="{{book.coverpage.url}}"
                               alt="01"
@@ -140,7 +140,7 @@
                           </div>
                         </td>
                         <td class="text-center close">
-                          <a class="close-cart"
+                          <a class="close-cart" href="{% url 'remshelf' user.username book.id %}"
                             ><i class="material-icons">close</i></a
                           >
                         </td>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
@@ -11,6 +11,7 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from .token import account_activation_token
 from user.models import CustomUser
 from django.db.models.query_utils import Q
+from django.contrib.auth.decorators import login_required
 
 def activate(request, uidb64, token):
     User = CustomUser
@@ -157,3 +158,10 @@ def passwordResetConfirm(request, uidb64, token):
 
     messages.error(request, 'Something went wrong, redirecting back to Homepage')
     return redirect("index")
+
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    messages.success(request, "Leaving so soon? Don't worry, we'll keep your virtual seat warm for when you decide to return! 👋😄")
+    return redirect('shelf')

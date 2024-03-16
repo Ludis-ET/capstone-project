@@ -34,13 +34,4 @@ The project requires the following:
 - A relational database system for storing user and book information.
 - Frontend technology  for a user interface.
 
-### Installation and Setup
-
-- **Clone the repository**
-https://github.com/Ludis-ET/capstone-project.git
-
-- **Install dependencies**
-
--**Set up the database**
-python manage.py migrate
 

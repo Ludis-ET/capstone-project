@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
+from django.contrib.auth import get_user_model
 
 
 class Genre(models.Model):
@@ -13,11 +14,11 @@ class Genre(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length = 200)
     cover_page = models.ImageField(upload_to='cover pages/',null=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.PROTECT)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.PROTECT, null = True)
     genres = models.ManyToManyField(Genre)
     book = models.FileField(upload_to='books/')
     description = models.TextField()
-    history = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='borrowed_books')
+    history = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='borrowed_books', blank=True)
     views = models.PositiveIntegerField(default = 0)
     status_choices = (
         ('available', 'Available'),
@@ -34,12 +35,9 @@ class Book(models.Model):
         return f'{self.title} book by {self.author.first_name}'
     
     def clean(self):
-        if not self.author.is_superuser and not self.author.is_staff:
-            raise ValidationError("Only admins and superadmins can add books.")
-
-        max_size = 50 * 1024 * 1024 
+        max_size = 500 * 1024 * 1024 
         if self.book.size > max_size:
-            raise ValidationError("Book size should be less than or equal to 50MB.")
+            raise ValidationError("Book size should be less than or equal to 500MB.")
         
     @property
     def average_rating(self):

@@ -160,7 +160,15 @@ def shelf(request):
 
 
 def book(request,id):
-    return render(request, "pages/shelf/BookDetail.html",{})
+    user = request.user
+    favorite, created = Wishlist.objects.get_or_create(user=user)
+    shelf, created = Shelf.objects.get_or_create(user=user)
+    context = {
+        'user': user,
+        'fav':favorite,
+        'shelf':shelf
+    }
+    return render(request, "pages/shelf/BookDetail.html",context)
 
 
 def password_reset_request(request):

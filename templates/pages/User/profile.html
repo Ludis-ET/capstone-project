@@ -10,158 +10,103 @@
         <div class="row">
           <div class="col-lg-12 order-lg-last account-content">
             <h4>Edit Account Information</h4>
-            <form action="#" class="myacoount-form">
+            <form method="POST" class="myaccount-form">
+              {% csrf_token %}
               <div class="row">
-                <div class="col-sm-12">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group required-field">
-                        <label for="acc-name"
-                          >First Name <span class="required">*</span></label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="acc-name"
-                          name="acc-name"
-                          required=""
-                        />
+                  <div class="col-sm-12">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="form-group required-field">
+                                  <label for="id_first_name">First Name <span class="required">*</span></label>
+                                  <input type="text" class="form-control" id="id_first_name" name="first_name" value="{{ user.first_name }}" required="">
+                              </div>
+                              <!-- End .form-group -->
+                          </div>
+                          <!-- End .col-md-4 -->
+          
+                          <div class="col-md-4">
+                              <div class="form-group">
+                                  <label for="id_username">Username <span class="required">*</span></label>
+                                  <input type="text" class="form-control" id="id_username" name="username" value="{{ user.username }}">
+                              </div>
+                              <!-- End .form-group -->
+                          </div>
+                          <!-- End .col-md-4 -->
+          
+                          <div class="col-md-4">
+                              <div class="form-group required-field">
+                                  <label for="id_last_name">Last Name <span class="required">*</span></label>
+                                  <input type="text" class="form-control" id="id_last_name" name="last_name" value="{{ user.last_name }}" required="">
+                              </div>
+                              <!-- End .form-group -->
+                          </div>
+                          <!-- End .col-md-4 -->
                       </div>
-                      <!-- End .form-group -->
-                    </div>
-                    <!-- End .col-md-4 -->
-
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="acc-mname"
-                          >Username <span class="required">*</span></label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="acc-mname"
-                          name="acc-mname"
-                        />
-                      </div>
-                      <!-- End .form-group -->
-                    </div>
-                    <!-- End .col-md-4 -->
-
-                    <div class="col-md-4">
-                      <div class="form-group required-field">
-                        <label for="acc-lastname"
-                          >Last Name <span class="required">*</span></label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="acc-lastname"
-                          name="acc-lastname"
-                          required=""
-                        />
-                      </div>
-                      <!-- End .form-group -->
-                    </div>
-                    <!-- End .col-md-4 -->
+                      <!-- End .row -->
                   </div>
-                  <!-- End .row -->
-                </div>
-                <!-- End .col-sm-11 -->
+                  <!-- End .col-sm-11 -->
               </div>
               <!-- End .row -->
-
+          
               <div class="form-group required-field">
-                <label for="acc-email">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="acc-email"
-                  name="acc-email"
-                  required=""
-                />
+                  <label for="id_email">Email</label>
+                  <input type="email" class="form-control" id="id_email" name="email" value="{{ user.email }}" required="">
               </div>
               <!-- End .form-group -->
-
+          
               <div class="form-group required-field">
-                <label for="account-password">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="account-password"
-                  name="account-password"
-                  required=""
-                />
+                  <label for="id_password">Password</label>
+                  <input type="password" class="form-control" id="id_password" name="password">
+              </div>
+          
+              <div class="form-group required-field">
+                  <label for="id_confirm_password">Confirm Password</label>
+                  <input type="password" class="form-control" id="id_confirm_password" name="confirm_password" >
               </div>
               <!-- End .form-group -->
+          
               <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="change-password-checkbox"
-                  value="1"
-                />
-                <label
-                  class="custom-control-label"
-                  for="change-password-checkbox"
-                  >Change Password</label
-                >
+                  <input type="checkbox" class="custom-control-input" id="change_password_checkbox" name="change_password" value="1">
+                  <label class="custom-control-label" for="change_password_checkbox">Change Password</label>
               </div>
               <!-- End .custom-checkbox -->
-
+          
               <div id="account-change-password" class="">
-                <h4>Change Password</h4>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group required-field">
-                      <label for="account-pass2">Password</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="account-pass2"
-                        name="account-pass2"
-                      />
-                    </div>
-                    <!-- End .form-group -->
+                  <h4>Change Password</h4>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group required-field">
+                              <label for="id_new_password">New Password</label>
+                              <input type="password" class="form-control" id="id_new_password" name="new_password">
+                          </div>
+                          <!-- End .form-group -->
+                      </div>
+                      <!-- End .col-md-6 -->
+          
+                      <div class="col-md-6">
+                          <div class="form-group required-field">
+                              <label for="id_confirm_new_password">Confirm New Password</label>
+                              <input type="password" class="form-control" id="id_confirm_new_password" name="confirm_new_password">
+                          </div>
+                          <!-- End .form-group -->
+                      </div>
+                      <!-- End .col-md-6 -->
                   </div>
-                  <!-- End .col-md-6 -->
-
-                  <div class="col-md-6">
-                    <div class="form-group required-field">
-                      <label for="account-pass3">Confirm Password</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="account-pass3"
-                        name="account-pass3"
-                      />
-                    </div>
-                    <!-- End .form-group -->
-                  </div>
-                  <!-- End .col-md-6 -->
-                </div>
-                <!-- End .row -->
+                  <!-- End .row -->
               </div>
-              <!-- End #account-chage-pass -->
-
+              <!-- End #account-change-pass -->
+          
               <div class="required text-right">* Required Field</div>
-              <div
-                class="form-footer d-flex justify-content-between align-items-center"
-              >
-                <a href="#"
-                  ><i class="material-icons">navigate_before</i>Back</a
-                >
-
-                <div class="form-footer-right">
-                  <button type="submit" class="btn btn-primary btn-primary">
-                    Save
-                  </button>
-                  <a href="{% url 'logout' %}" class="btn btn-danger btn-danger" style="color: #fff;">
-                    logout
-                  </a>
-                </div>
+              <div class="form-footer d-flex justify-content-between align-items-center">
+                  <a href="#"><i class="material-icons">navigate_before</i>Back</a>
+                  <div class="form-footer-right">
+                      <button type="submit" class="btn btn-primary btn-primary">Save</button>
+                      <a href="{% url 'logout' %}" class="btn btn-danger btn-danger" style="color: #fff;">Logout</a>
+                  </div>
               </div>
               <!-- End .form-footer -->
-            </form>
+          </form>
+          
           </div>
         </div>
       </div>

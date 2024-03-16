@@ -45,8 +45,11 @@ def index(request):
     demanding_books = Book.objects.annotate(borrowed_users_count=Count('history')).order_by('-borrowed_users_count')
     latest_books = Book.objects.all().order_by('-date_updated')
     featured_books = Book.objects.all().order_by('-views')
-    favorite, created = Wishlist.objects.get_or_create(user=user)
-    shelf, created = Shelf.objects.get_or_create(user=user)
+    if user.is_authenticated:
+        favorite, created = Wishlist.objects.get_or_create(user=user)
+        shelf, created = Shelf.objects.get_or_create(user=user)
+    else:
+        favorite = shelf = None
     context = {
         'user': user,
         'demanding':demanding_books,
@@ -143,8 +146,11 @@ def shelf(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    favorite, _ = Wishlist.objects.get_or_create(user=user)
-    shelf, _ = Shelf.objects.get_or_create(user=user)
+    if user.is_authenticated:
+        favorite, created = Wishlist.objects.get_or_create(user=user)
+        shelf, created = Shelf.objects.get_or_create(user=user)
+    else:
+        favorite = shelf = None
 
     context = {
         'user': user,

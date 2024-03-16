@@ -118,43 +118,45 @@ def shelf(request):
     user = request.user
     books_list = Book.objects.all()
     genres = Genre.objects.all()
+
+    genre_filter = request.GET.getlist('genre')
+    availability_filter = request.GET.getlist('availability')
+
     sort_by = request.GET.get('sort')
     if sort_by == 'p-name':
         books_list = sorted(books_list, key=lambda x: x.history.count(), reverse=True)
 
-    genre = request.GET.get('genre')
-    if genre:
-        books_list = books_list.filter(genres__name=genre)
+    if genre_filter:
+        books_list = books_list.filter(genres__name__in=genre_filter)
 
-    availability = request.GET.get('availability')
-    if availability:
-        books_list = books_list.filter(status=availability)
+    if availability_filter:
+        books_list = books_list.filter(status__in=availability_filter)
 
-    rating = request.GET.get('rating')
-    if rating:
-        if rating == '4+':
-            books_list = [book for book in books_list if book.average_rating >= 4]
-        elif rating == '3+':
-            books_list = [book for book in books_list if book.average_rating >= 3]
-        elif rating == '2+':
-            books_list = [book for book in books_list if book.average_rating >= 2]
-    items_per_page = int(request.GET.get('number', 9))
+    rating_filter = request.GET.get('rating')
+    if rating_filter:
+        rating_value = int(rating_filter[:-1])
+        books_list = [book for book in books_list if book.average_rating >= rating_value]
 
+    items_per_page = int(request.GET.get('number', 6))
     paginator = Paginator(books_list, items_per_page)
-
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    favorite, created = Wishlist.objects.get_or_create(user=user)
-    shelf, created = Shelf.objects.get_or_create(user=user)
+
+    favorite, _ = Wishlist.objects.get_or_create(user=user)
+    shelf, _ = Shelf.objects.get_or_create(user=user)
+
     context = {
         'user': user,
-        'fav':favorite,
-        'shelf':shelf,
+        'fav': favorite,
+        'shelf': shelf,
         'books': page_obj,
-        'items_per_page':items_per_page,
-        'genres':genres
+        'items_per_page': items_per_page,
+        'genres': genres,
+        'genre_filter': genre_filter,
+        'availability_filter': availability_filter,
+        'rating_filter': rating_filter,
     }
-    return render(request, "pages/shelf/shelf.html",context)
+    return render(request, "pages/shelf/shelf.html", context)
 
 
 def book(request,id):

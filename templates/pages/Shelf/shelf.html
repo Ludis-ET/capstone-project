@@ -403,6 +403,10 @@
         </div>
         <!-- all_books.html -->
 
+<!-- all_books.html -->
+
+<!-- shelf.html -->
+
 <div class="left-column sidebar-canvas order-lg-1">
   <span class="close-filter"></span>
   <div class="sidebar-inner w-100 float-left">
@@ -434,44 +438,45 @@
                           <div class="nav nav-pills flex-column mt-4">
                               {% for genre in genres %}
                               <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" name="genre" value="{{ genre.name }}" id="genre{{ forloop.counter }}">
-                                  <label class="form-check-label" for="genre{{ forloop.counter }}">
-                                      {{ genre.name }}
-                                      <span class="sidebar-badge"> {{ genre.book_set.count }}</span>
-                                  </label>
+                                  <input class="form-check-input" type="checkbox" name="genre" value="{{ genre.name }}" id="genre{{ forloop.counter }}"
+                                      {% if genre.name in genre_filter %}checked{% endif %}>
+                                  <label class="form-check-label" for="genre{{ forloop.counter }}">{{ genre.name }}</label>
                               </div>
                               {% endfor %}
                           </div>
                       </div>
                   </div>
                   <div class="sidebar-block price">
-                      <h3 class="widget-title">Availability</h3>
+                      <h3 class="widget-title">Not Available</h3>
                       <div class="price-inner">
                           <div class="form-check">
-                              <input class="form-check-input" type="checkbox" name="availability" value="available" id="available">
+                              <input class="form-check-input" type="checkbox" name="availability" value="available" id="available"
+                                  {% if 'available' in availability_filter %}checked{% endif %}>
                               <label class="form-check-label" for="available">Available</label>
                           </div>
                           <div class="form-check">
-                              <input class="form-check-input" type="checkbox" name="availability" value="borrowed" id="borrowed">
+                              <input class="form-check-input" type="checkbox" name="availability" value="borrowed" id="borrowed"
+                                  {% if 'borrowed' in availability_filter %}checked{% endif %}>
                               <label class="form-check-label" for="borrowed">Not Available</label>
                           </div>
                       </div>
                   </div>
                   <div class="sidebar-block color">
                       <h3 class="widget-title">Rating</h3>
-                      <div class="price-inner">
-                          <div class="form-check">
-                              <input class="form-check-input" type="radio" name="rating" value="4+" id="rating4">
-                              <label class="form-check-label" for="rating4">4 and above</label>
-                          </div>
-                          <div class="form-check">
-                              <input class="form-check-input" type="radio" name="rating" value="3+" id="rating3">
-                              <label class="form-check-label" for="rating3">3 and above</label>
-                          </div>
-                          <div class="form-check">
-                              <input class="form-check-input" type="radio" name="rating" value="2+" id="rating2">
-                              <label class="form-check-label" for="rating2">2 and above</label>
-                          </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="rating" value="4+" id="rating4"
+                              {% if rating_filter == '4+' %}checked{% endif %}>
+                          <label class="form-check-label" for="rating4">4 and above</label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="rating" value="3+" id="rating3"
+                              {% if rating_filter == '3+' %}checked{% endif %}>
+                          <label class="form-check-label" for="rating3">3 and above</label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="rating" value="2+" id="rating2"
+                              {% if rating_filter == '2+' %}checked{% endif %}>
+                          <label class="form-check-label" for="rating2">2 and above</label>
                       </div>
                   </div>
                   <div class="sidebar-block">
@@ -483,6 +488,8 @@
       </div>
   </div>
 </div>
+
+
 
 <!-- Pagination code remains the same as provided earlier -->
 

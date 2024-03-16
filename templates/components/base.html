@@ -19,8 +19,7 @@
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" />
     <link href="{% static 'css/message.css' %}" rel="stylesheet" />
   </head>
-<body>
-    {% block content %}
+  <body {% block class %}{% endblock %}>
     {% block header %} {% endblock %}
 
     <div class="message" id="message">
@@ -39,7 +38,6 @@
             <span onclick="handleMessage()">&times;</span>
         {% endif %}
     </div>
-    {% endblock %}
 
     <script>
         const message = document.getElementById("message");

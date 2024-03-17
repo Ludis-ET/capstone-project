@@ -45,10 +45,12 @@ def index(request):
     demanding_books = Book.objects.annotate(borrowed_users_count=Count('history')).order_by('-borrowed_users_count')
     latest_books = Book.objects.all().order_by('-date_updated')
     featured_books = Book.objects.all().order_by('-views')
-    favorite, created = Wishlist.objects.get_or_create(user=user)
-    shelf, created = Shelf.objects.get_or_create(user=user)
-    my, _ = BorrowedBook.objects.get_or_create(user=user)
-    av = 3 -  my.book.all().count()
+    if user.is_authenticated:
+        shelf, created = Shelf.objects.get_or_create(user=user)
+        favorite, created = Wishlist.objects.get_or_create(user=user)
+        my, _ = BorrowedBook.objects.get_or_create(user=user)
+        av = 3 -  my.book.all().count()
+    else: shelf = favorite =  my = av = None
     testimonies = Testimony.objects.all()
     context = {
         'user': user,
@@ -151,11 +153,12 @@ def shelf(request):
     paginator = Paginator(books_list, items_per_page)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
-    favorite, _ = Wishlist.objects.get_or_create(user=user)
-    shelf, _ = Shelf.objects.get_or_create(user=user)
-    my, _ = BorrowedBook.objects.get_or_create(user=user)
-    av = 3 -  my.book.all().count()
+    if user.is_authenticated:
+        favorite, _ = Wishlist.objects.get_or_create(user=user)
+        shelf, _ = Shelf.objects.get_or_create(user=user)
+        my, _ = BorrowedBook.objects.get_or_create(user=user)
+        av = 3 -  my.book.all().count()
+    else: favorite = shelf = my = av = None
     context = {
         'user': user,
         'fav': favorite,
@@ -174,8 +177,12 @@ def shelf(request):
 def book(request,id):
     user = request.user
     book = Book.objects.get(id=id)
-    favorite, created = Wishlist.objects.get_or_create(user=user)
-    shelf, created = Shelf.objects.get_or_create(user=user)
+    if user.is_authenticated:
+        favorite, _ = Wishlist.objects.get_or_create(user=user)
+        shelf, _ = Shelf.objects.get_or_create(user=user)
+        my, _ = BorrowedBook.objects.get_or_create(user=user)
+        av = 3 -  my.book.all().count()
+    else: favorite = shelf = my = av = None
     reviews = Review.objects.filter(book=book)
     recommended_books = Book.objects.filter(genres__in=book.genres.all()).exclude(id=book.id).distinct()[:5]
     if request.method == 'POST':
@@ -194,9 +201,7 @@ def book(request,id):
         return redirect(reverse('book', kwargs={'id': book.id}))
     else:
         book.views += 1
-        book.save()
-    my, _ = BorrowedBook.objects.get_or_create(user=user)
-    av = 3 -  my.book.all().count()         
+        book.save()     
     context = {
         'user': user,
         'fav':favorite,

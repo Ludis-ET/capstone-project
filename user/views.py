@@ -108,7 +108,7 @@ def profile(request, username):
     previous_url = request.META.get('HTTP_REFERER')
     favorite, created = Wishlist.objects.get_or_create(user=user)
     shelf, created = Shelf.objects.get_or_create(user=user)
-    shelfs, created = BorrowedBook.objects.get_or_create(user=user)  # get_or_create returns a tuple (object, created)
+    shelfs, created = BorrowedBook.objects.get_or_create(user=user)
 
     if request.method == 'POST':
         change_password = request.POST.get('change_password') == 'on'

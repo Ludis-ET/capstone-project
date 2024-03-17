@@ -79,7 +79,7 @@ def activateEmail(request,user,to):
         send_mail(mail_subject, message, None, [to], html_message=message)
         messages.success(request, f"{user}'s account is created successfully! Check {to} and confirm your account.")
     except Exception as e:
-        messages.error(request, f'Problem sending email to <b>{to}</b>. Please try again. Error: {str(e)}')
+        messages.error(request, f'Problem sending email to {to}. Please try again. Error: {str(e)}')
 
 def register(request):
     previous_url = request.META.get('HTTP_REFERER')
@@ -102,6 +102,15 @@ def register(request):
     else:
         return redirect('index')
         
+
+def activate_request(request):
+    if request.method == 'POST':
+        a = request.POST.get('email')
+        user = CustomUser.objects.get(email = a)
+        activateEmail(request,user,a)
+    return redirect('index')
+
+
 
 def login(request):
     previous_url = request.META.get('HTTP_REFERER')
@@ -234,7 +243,7 @@ def password_reset_request(request):
                     send_mail(mail_subject, message, None, [user_email], html_message=message)
                     messages.success(request, f'A password reset link sent to your address! Check {user_email} and confirm reset your password.')
                 except Exception as e:
-                    messages.error(request, f'Problem sending email to <b>{user_email}</b>. Please try again. Error: {str(e)}')
+                    messages.error(request, f'Problem sending email to {user_email}. Please try again.')
             
             else:messages.error(request, f'email not found')
     return redirect('index')

@@ -286,12 +286,7 @@
             />
           </div>
           <div class="checkbox-link d-flex justify-content-between">
-            <!-- <div class="left-col">
-              <input type="checkbox" id="remember_me" name="remember" /><label
-                for="remember_me"
-                >Remember Me</label
-              >
-            </div> -->
+            
             <div class="left-col">
               <a
                 href="#"
@@ -311,6 +306,18 @@
                 data-toggle="modal"
                 data-target="#modalForgetForm"
                 >Forget Password?</a
+              >
+            </div>
+          </div>
+          <div class="checkbox-link d-flex justify-content-between">
+          
+            <div class="right-col">
+              <a
+                href="#"
+                class="modal-view button"
+                data-toggle="modal"
+                data-target="#modalActivateForm"
+                >Resend activation key</a
               >
             </div>
           </div>
@@ -455,6 +462,53 @@
         </button>
       </div>
       <form method="POST" action="{% url 'reset_request' %}">
+        {% csrf_token %}
+        <div class="modal-body mx-3">
+          <div class="md-form mb-4">
+            <input
+              type="email"
+              id="LoginForm-name"
+              class="form-control validate"
+              placeholder="Email Address.."
+              autocomplete="off"
+              required
+              name="email"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-center">
+          <button class="btn btn-info" type="submit" name="reset">
+            Send rest link
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="modalActivateForm"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-medium text-left">
+          Resend activation key
+        </h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{% url 'activate_request' %}">
         {% csrf_token %}
         <div class="modal-body mx-3">
           <div class="md-form mb-4">

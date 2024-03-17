@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
+
 from core.models import Book
 from .models import *
 
@@ -131,13 +132,17 @@ def profile(request, username):
             messages.success(request, 'Your profile has been updated successfully.')
 
         return redirect(previous_url)
+    my, _ = BorrowedBook.objects.get_or_create(user=user)
+    av = 3 -  my.book.all().count()
     context = {
         'user': user,
         'fav':favorite,
         'shelf':shelf,
-        'shelfs':shelfs
+        'shelfs':shelfs,
+        'my':av
     }
     return render(request, "pages/user/profile.html",context)
+
 
 @login_required
 def wishlist(request,username):
@@ -145,11 +150,16 @@ def wishlist(request,username):
     favorite, created = Wishlist.objects.get_or_create(user=user)
     shelf, created = Shelf.objects.get_or_create(user=user)
     shelfs = Wishlist.objects.get(user=user)
+    my, _ = BorrowedBook.objects.get_or_create(user=user)
+    av = 3 -  my.book.all().count()
     context = {
         'user': user,
         'fav':favorite,
         'shelf':shelf,
-        'shelfs':shelfs
+        'shelfs':shelfs,
+        'my':av,
+        'av':my
+
     }
     return render(request, "pages/user/wishlist.html",context)
 

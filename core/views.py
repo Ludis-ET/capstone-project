@@ -13,7 +13,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 from django.urls import reverse
 
-from user.models import CustomUser,Wishlist,Shelf
+from user.models import CustomUser,Wishlist,Shelf,BorrowedBook
 from .models import *
 from .forms import CustomUserCreationForm, ReviewForm
 from .token import account_activation_token
@@ -42,15 +42,13 @@ def activate(request, uidb64, token):
 
 def index(request):
     user = request.user
-    demanding_books = Book.objects.annotate(borrowed_users_count=Count('borrowed_by')).order_by('-borrowed_users_count')
+    demanding_books = Book.objects.annotate(borrowed_users_count=Count('history')).order_by('-borrowed_users_count')
     latest_books = Book.objects.all().order_by('-date_updated')
     featured_books = Book.objects.all().order_by('-views')
-    testimonies = Testimony.objects.all()
-    if user.is_authenticated:
-        favorite, created = Wishlist.objects.get_or_create(user=user)
-        shelf, created = Shelf.objects.get_or_create(user=user)
-    else:
-        favorite = shelf = None
+    favorite, created = Wishlist.objects.get_or_create(user=user)
+    shelf, created = Shelf.objects.get_or_create(user=user)
+    my, _ = BorrowedBook.objects.get_or_create(user=user)
+    av = 3 -  my.book.all().count()
     context = {
         'user': user,
         'demanding':demanding_books,
@@ -58,7 +56,7 @@ def index(request):
         'featured':featured_books,
         'fav':favorite,
         'shelf':shelf,
-        'tes':testimonies
+        'my':av
     }
     return render(request, "pages/Home/home.html", context)
 
@@ -124,22 +122,25 @@ def shelf(request):
     user = request.user
     books_list = Book.objects.all()
     genres = Genre.objects.all()
+    if request.method == 'POST':
+        q = request.POST.get('q')
+        books_list = Book.objects.filter(title__icontains = q)
+        messages.success(request,f"serching books with title containing '{q}'")
 
     genre_filter = request.GET.getlist('genre')
     availability_filter = request.GET.getlist('availability')
-    rating_filter = request.GET.get('rating')
 
     sort_by = request.GET.get('sort')
     if sort_by == 'p-name':
-        books_list = sorted(books_list, key=lambda x: x.borrowed_by.count(), reverse=True)
+        books_list = sorted(books_list, key=lambda x: x.history.count(), reverse=True)
 
     if genre_filter:
-        for genre in genre_filter:
-            books_list = books_list.filter(genres__name=genre)
+        books_list = books_list.filter(genres__name__in=genre_filter)
 
     if availability_filter:
         books_list = books_list.filter(status__in=availability_filter)
 
+    rating_filter = request.GET.get('rating')
     if rating_filter:
         rating_value = int(rating_filter[:-1])
         books_list = [book for book in books_list if book.average_rating >= rating_value]
@@ -149,12 +150,10 @@ def shelf(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    if user.is_authenticated:
-        favorite, created = Wishlist.objects.get_or_create(user=user)
-        shelf, created = Shelf.objects.get_or_create(user=user)
-    else:
-        favorite = shelf = None
-
+    favorite, _ = Wishlist.objects.get_or_create(user=user)
+    shelf, _ = Shelf.objects.get_or_create(user=user)
+    my, _ = BorrowedBook.objects.get_or_create(user=user)
+    av = 3 -  my.book.all().count()
     context = {
         'user': user,
         'fav': favorite,
@@ -165,9 +164,9 @@ def shelf(request):
         'genre_filter': genre_filter,
         'availability_filter': availability_filter,
         'rating_filter': rating_filter,
+        'my':av,
     }
     return render(request, "pages/shelf/shelf.html", context)
-
 
 
 def book(request,id):
@@ -194,7 +193,8 @@ def book(request,id):
     else:
         book.views += 1
         book.save()
-                
+    my, _ = BorrowedBook.objects.get_or_create(user=user)
+    av = 3 -  my.book.all().count()         
     context = {
         'user': user,
         'fav':favorite,
@@ -202,6 +202,7 @@ def book(request,id):
         'book':book,
         'reviews':reviews,
         'rec':recommended_books,
+        'my':av
     }
     return render(request, "pages/shelf/BookDetail.html",context)
 
@@ -266,3 +267,6 @@ def logout(request):
     auth_logout(request)
     messages.success(request, "Leaving so soon? Don't worry, we'll keep your virtual seat warm for when you decide to return! 👋😄")
     return redirect('shelf')
+
+    
+   

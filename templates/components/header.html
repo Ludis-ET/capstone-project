@@ -44,15 +44,14 @@
               <i class="material-icons search">search</i>
               <i class="material-icons close">close</i>
             </a>
-            <form autocomplete="off" method="POST" class="search-form">
+            <form autocomplete="off" method="POST" action="{% url 'shelf' %}" class="search-form">
               {% csrf_token %}
               <div class="autocomplete" style="width: 300px">
                 <input
                   id="myInput"
                   type="text"
-                  name="myCountry"
                   placeholder="Search here"
-                  name="search"
+                  name="q"
                 />
                 <button type="submit">
                   <i class="material-icons">search</i>
@@ -163,7 +162,7 @@
                         <td class="text-left">
                           <strong>Available shelves</strong>
                         </td>
-                        <td class="text-right"><strong>Unknown</strong></td>
+                        <td class="text-right"><strong>{{my}}</strong></td>
                       </tr>
                     </tbody>
                   </table>

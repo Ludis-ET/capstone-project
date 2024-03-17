@@ -15,7 +15,7 @@
                         <th class="table-p-name text-uppercase">Book</th>
                         <th class="table-p-price text-uppercase">borrowed people</th>
                         <th class="table-p-qty text-uppercase">Stock Status</th>
-                        <th class="table-total text-uppercase">add to shelf</th>
+                        <th class="table-total text-uppercase">borrow</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +26,9 @@
                         <td class="table-p-name text-capitalize"><a href="{% url 'book' sh.id %}">{{sh.title}}</a></td>
                         <td class="table-p-price"><p>{{sh.borrowed_by.all.count}}</p></td>
                         <td class="table-p-qty">{{sh.status}}</td>
+                        {% if not sh in av.book.all %}
                         <td class="table-addtocart"><a href="{% url 'addborrow' user.username sh.id %}" class="btn-primary btn">Borrow</a></td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

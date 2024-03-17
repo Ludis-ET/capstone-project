@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import update_session_auth_hash
 
 from core.models import Book
@@ -102,26 +101,36 @@ def remove_book(request,username,id):
         return redirect(previous_url)
     messages.error(request, f"error")
 
-@login_required
-def profile(request,username):
+@login_required(login_url='index')
+def profile(request, username):
     user = request.user
+    previous_url = request.META.get('HTTP_REFERER')
     favorite, created = Wishlist.objects.get_or_create(user=user)
     shelf, created = Shelf.objects.get_or_create(user=user)
-    shelfs = BorrowedBook.objects.get(user=user)
-    form = UserChangeForm(instance=user)
+    shelfs, created = BorrowedBook.objects.get_or_create(user=user)  # get_or_create returns a tuple (object, created)
+
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=user)
-        if form.is_valid():
-            user = form.save()
-            if request.POST.get('change_password'):
-                password = request.POST.get('new_password')
-                user.set_password(password)
-                user.save()
+        change_password = request.POST.get('change_password') == 'on'
+        if change_password:
+            new_password = request.POST.get('new_password')
+            confirm_new_password = request.POST.get('confirm_new_password')
+            if new_password == confirm_new_password:
+                user.set_password(new_password)
                 update_session_auth_hash(request, user)
-                messages.success(request, 'Your profile has been updated successfully and password changed.')
+                messages.success(request, 'Your password has been changed successfully.')
             else:
-                messages.success(request, 'Your profile has been updated successfully.')
-            return redirect('profile')
+                messages.error(request, 'New passwords do not match.')
+                return redirect(previous_url)
+        else:
+            # Update other profile fields
+            user.first_name = request.POST.get('first_name')
+            user.last_name = request.POST.get('last_name')
+            user.username = request.POST.get('username')
+            user.email = request.POST.get('email')
+            user.save()
+            messages.success(request, 'Your profile has been updated successfully.')
+
+        return redirect(previous_url)
     context = {
         'user': user,
         'fav':favorite,

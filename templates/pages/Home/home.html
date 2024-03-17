@@ -555,7 +555,7 @@
                 brilliance shines through every chapter.
               </div>
               <div class="ttbtn">
-                <a href="#" class="btn-primary text-capitalize">go to shelf</a>
+                <a href="{% url 'shelf' %}" class="btn-primary text-capitalize">go to shelf</a>
               </div>
             </div>
           </div>
@@ -571,6 +571,7 @@
     <div class="tttestimonial-content container">
       <div class="tttestimonial-inner">
         <ul class="tttestimonial owl-carousel">
+          {% for a in tes %}
           <li>
             <div
               class="testimonial-block d-lg-flex d-md-flex d-sm-block align-items-center"
@@ -579,9 +580,9 @@
                 <div
                   class="testimonial-image float-left d-flex align-items-center"
                 >
-                  <img alt="" src="{% static 'img/books/person1.jpg' %}" />
+                  <img alt="" src="{% static 'img/books/avatar.png' %}" />
                   <div class="testimonial-user-title">
-                    <h4>Ludis</h4>
+                    <h4>{{a.author.first_name}} {{a.author.last_name}}</h4>
                     <div class="user-designation">Author</div>
                   </div>
                 </div>
@@ -589,15 +590,13 @@
               <div class="testimonial-content col-sm-9 float-left">
                 <div class="testimonial-desc">
                   <p>
-                    Duis faucibus enim vitae nunc molestie, nec facilisis arcu
-                    pulvinar. Nullam mattis arcu convallis, bibendum dui ac,
-                    laoreet est.Vivamus interdum egastas rutrum. Quisque laoreet
-                    ante sed placerat imperdiet.
+                    {{a.message}}
                   </p>
                 </div>
               </div>
             </div>
           </li>
+          {% endfor %}
         </ul>
       </div>
     </div>

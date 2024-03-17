@@ -45,6 +45,7 @@ def index(request):
     demanding_books = Book.objects.annotate(borrowed_users_count=Count('history')).order_by('-borrowed_users_count')
     latest_books = Book.objects.all().order_by('-date_updated')
     featured_books = Book.objects.all().order_by('-views')
+    testimonies = Testimony.objects.all()
     if user.is_authenticated:
         favorite, created = Wishlist.objects.get_or_create(user=user)
         shelf, created = Shelf.objects.get_or_create(user=user)
@@ -56,7 +57,8 @@ def index(request):
         'latest':latest_books,
         'featured':featured_books,
         'fav':favorite,
-        'shelf':shelf
+        'shelf':shelf,
+        'tes':testimonies
     }
     return render(request, "pages/Home/home.html", context)
 
@@ -125,18 +127,19 @@ def shelf(request):
 
     genre_filter = request.GET.getlist('genre')
     availability_filter = request.GET.getlist('availability')
+    rating_filter = request.GET.get('rating')
 
     sort_by = request.GET.get('sort')
     if sort_by == 'p-name':
         books_list = sorted(books_list, key=lambda x: x.history.count(), reverse=True)
 
     if genre_filter:
-        books_list = books_list.filter(genres__name__in=genre_filter)
+        for genre in genre_filter:
+            books_list = books_list.filter(genres__name=genre)
 
     if availability_filter:
         books_list = books_list.filter(status__in=availability_filter)
 
-    rating_filter = request.GET.get('rating')
     if rating_filter:
         rating_value = int(rating_filter[:-1])
         books_list = [book for book in books_list if book.average_rating >= rating_value]
@@ -164,6 +167,7 @@ def shelf(request):
         'rating_filter': rating_filter,
     }
     return render(request, "pages/shelf/shelf.html", context)
+
 
 
 def book(request,id):

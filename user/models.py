@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 
 class CustomUser(AbstractUser):
@@ -11,6 +12,8 @@ class CustomUser(AbstractUser):
     class Meta:
         verbose_name = "Person"
         verbose_name_plural = "People"
+    
+
 
     def save(self, *args, **kwargs):
         if self.is_author and not self.is_manager:
@@ -43,8 +46,9 @@ class Wishlist(models.Model):
 
 class BorrowedBook(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    book = models.ManyToManyField('core.Book',blank = True)
+    book = models.ManyToManyField('core.Book', blank=True)
     borrowed_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} borrowed {self.book.title}"
+        book_titles = ', '.join([book.title for book in self.book.all()])
+        return f"{self.user.username} borrowed: {book_titles}"

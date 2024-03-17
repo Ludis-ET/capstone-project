@@ -39,3 +39,7 @@ class UserAdmin(BaseUserAdmin):
             return 'author'
         return 'unknown'
 
+
+# admin.site.register(Shelf)
+# admin.site.register(Wishlist)
+admin.site.register(BorrowedBook)

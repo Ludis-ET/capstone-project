@@ -20,16 +20,16 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ['title','views', 'status', 'author','borrowed_users_count','average_rating']
     list_filter = ['genres','status', 'author']
     search_fields = ['title__istartswith']
-    exclude = ('views', 'status','history')
+    exclude = ('views', 'status','borrowed_by')
 
     def borrowed_users_count(self, obj):
-        return obj.history.count()
+        return obj.borrowed_by.count()
 
     borrowed_users_count.short_description = 'Borrowed Students Count'
 
     def get_form(self, request, obj=None, **kwargs):
         if obj is None:
-            kwargs['fields'] = ['title','genres', 'cover_page','book', 'description']
+            kwargs['fields'] = ['title','genres', 'coverpage','book', 'description']
         return super().get_form(request, obj, **kwargs)
 
 

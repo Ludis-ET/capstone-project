@@ -27,7 +27,7 @@ class CustomUser(AbstractUser):
 
 class Shelf(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,verbose_name = "Student")
-    books = models.ManyToManyField('core.Book', related_name='shelves')
+    books = models.ManyToManyField('core.Book', related_name='shelves', blank = True, null = True)
     added_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -35,7 +35,7 @@ class Shelf(models.Model):
 
 class Wishlist(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    books = models.ManyToManyField('core.Book', related_name='wishlists')
+    books = models.ManyToManyField('core.Book', related_name='wishlists', blank = True, null = True)
     added_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -43,7 +43,7 @@ class Wishlist(models.Model):
 
 class BorrowedBook(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    book = models.ForeignKey('core.Book', on_delete=models.CASCADE)
+    book = models.ForeignKey('core.Book', on_delete=models.CASCADE, blank = True, null = True)
     borrowed_date = models.DateField(auto_now_add=True)
 
     def __str__(self):

@@ -42,12 +42,9 @@ def activate(request, uidb64, token):
 
 def index(request):
     user = request.user
-    if Book.objects.exists():
-        demanding_books = Book.objects.annotate(borrowed_users_count=Count('history')).order_by('-borrowed_users_count')
-        latest_books = Book.objects.all().order_by('-date_updated')
-        featured_books = Book.objects.all().order_by('-views')
-    else:
-        demanding_books = latest_books = featured_books = None
+    demanding_books = Book.objects.annotate(borrowed_users_count=Count('borrowed_by')).order_by('-borrowed_users_count')
+    latest_books = Book.objects.all().order_by('-date_updated')
+    featured_books = Book.objects.all().order_by('-views')
     testimonies = Testimony.objects.all()
     if user.is_authenticated:
         favorite, created = Wishlist.objects.get_or_create(user=user)
@@ -134,7 +131,7 @@ def shelf(request):
 
     sort_by = request.GET.get('sort')
     if sort_by == 'p-name':
-        books_list = sorted(books_list, key=lambda x: x.history.count(), reverse=True)
+        books_list = sorted(books_list, key=lambda x: x.borrowed_by.count(), reverse=True)
 
     if genre_filter:
         for genre in genre_filter:

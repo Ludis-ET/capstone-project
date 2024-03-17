@@ -24,7 +24,7 @@
                         <td class="table-remove"><a href="{% url 'remshelf' user.username sh.id %}"><i class="material-icons">delete</i></a></td>
                         <td class="table-image"><a href="{% url 'book' sh.id %}"><img src="{{sh.coverpage.url}}" alt=""></a></td>
                         <td class="table-p-name text-capitalize"><a href="{% url 'book' sh.id %}">{{sh.title}}</a></td>
-                        <td class="table-p-price"><p>{{sh.borrowed_by.all.count}}</p></td>
+                        <td class="table-p-price"><p>{{sh.history.all.count}}</p></td>
                         <td class="table-p-qty">{{sh.status}}</td>
                         <td class="table-addtocart"><a href="{% url 'addborrow' user.username sh.id %}" class="btn-primary btn">Borrow</a></td>
                     </tr>

@@ -81,7 +81,7 @@ Shelf / {{book.title}}{% endblock %} {% block rest %}
             ({{book.total_rating}})
           </div>
           <div class="price float-left w-100 d-flex">
-            <div class="regular-price">{{book.borrowed_by.all.count}}</div>
+            <div class="regular-price">{{book.history.all.count}}</div>
             <div class="regilar-price">people borrowed it</div>
           </div>
           <div class="price float-left w-100 d-flex">
@@ -198,7 +198,7 @@ Shelf / {{book.title}}{% endblock %} {% block rest %}
             </div>
           </div>
           {% endfor %}
-          {% if user in book.borrowed_by.all %}
+          {% if user in book.history.all %}
           <form method="POST" class="rating-form float-left w-100" id="rating-form">
             {% csrf_token %}
             <h5>Add your rating</h5>
@@ -324,7 +324,7 @@ Shelf / {{book.title}}{% endblock %} {% block rest %}
                       <div class="price">
                         <div class="regular-price">
                           <div class="badge">
-                            <i class="material-icons">group</i> {{book.borrowed_by.count}}
+                            <i class="material-icons">group</i> {{book.history.count}}
                           </div>
                           <div class="badge">
                             <i class="material-icons">visibility</i> {{book.views}}

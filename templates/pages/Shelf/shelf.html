@@ -139,7 +139,7 @@
                       <div class="price">
                         <div class="regular-price">
                           <div class="badge">
-                            <i class="material-icons">group</i> {{book.borrowed_by.count}}
+                            <i class="material-icons">group</i> {{book.history.count}}
                           </div>
                           <div class="badge">
                             <i class="material-icons">visibility</i> {{book.views}}
@@ -276,7 +276,7 @@
                       class="price-main col-md-3 col-sm-5 float-left text-center text-sm-center text-xs-left"
                     >
                       <div class="price">
-                        <div class="regular-price"><i class="material-icons">group</i> {{book.borrowed_by.all.count}}</div>
+                        <div class="regular-price"><i class="material-icons">group</i> {{book.history.all.count}}</div>
                         {% if book.status == 'available' %}
                         <div class="regular-price" style="background-color: green; color: #fff; border: 10px; padding: 5px;">Available</div>
                         {% else %}

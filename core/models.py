@@ -76,3 +76,6 @@ class Testimony(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     class Meta:
         verbose_name_plural = "Testimonies"
+
+    def __str__(self):
+        return f"message from {self.author.first_name} "

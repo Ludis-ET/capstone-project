@@ -49,6 +49,7 @@ def index(request):
     shelf, created = Shelf.objects.get_or_create(user=user)
     my, _ = BorrowedBook.objects.get_or_create(user=user)
     av = 3 -  my.book.all().count()
+    testimonies = Testimony.objects.all()
     context = {
         'user': user,
         'demanding':demanding_books,
@@ -56,7 +57,8 @@ def index(request):
         'featured':featured_books,
         'fav':favorite,
         'shelf':shelf,
-        'my':av
+        'my':av,
+        'tes':testimonies
     }
     return render(request, "pages/Home/home.html", context)
 

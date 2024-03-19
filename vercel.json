@@ -1,13 +1,20 @@
 {
-    "builds": [{
+    "builds": [
+      {
         "src": "bookStore/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "15mb", "runtime": "python3.11" }
-    }],
+      }
+    ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "bookStore/wsgi.py"
-        }
+      {
+        "src": "/static/(.*)",
+        "dest": "static/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "bookStore/wsgi.py"
+      }
     ]
-}
+  }
+  

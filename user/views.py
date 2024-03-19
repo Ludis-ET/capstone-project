@@ -7,7 +7,7 @@ from django.contrib.auth import update_session_auth_hash
 from core.models import Book
 from .models import *
 
-@login_required
+@login_required(login_url='index')
 def add_wishlist(request,username,id):
     previous_url = request.META.get('HTTP_REFERER')
     user = CustomUser.objects.get(username = username)
@@ -20,7 +20,7 @@ def add_wishlist(request,username,id):
     messages.error(request, f"you can only add to your favorites list")
     return redirect(previous_url)
 
-@login_required
+@login_required(login_url='index')
 def remove_wishlist(request,username,id):
     previous_url = request.META.get('HTTP_REFERER')
     user = CustomUser.objects.get(username = username)
@@ -33,7 +33,7 @@ def remove_wishlist(request,username,id):
     messages.error(request, f"you can only remove from your favorites list")
 
 
-@login_required
+@login_required(login_url='index')
 def add_shelf(request,username,id):
     previous_url = request.META.get('HTTP_REFERER')
     user = CustomUser.objects.get(username = username)
@@ -46,7 +46,7 @@ def add_shelf(request,username,id):
     messages.error(request, f"you can only add to your shelf")
     return redirect(previous_url)
 
-@login_required
+@login_required(login_url='index')
 def add_borrow(request,username,id):
     previous_url = request.META.get('HTTP_REFERER')
     user = CustomUser.objects.get(username = username)
@@ -75,7 +75,7 @@ def add_borrow(request,username,id):
     messages.error(request, f"you can only borrow from your shelf")
     return redirect(previous_url)
 
-@login_required
+@login_required(login_url='index')
 def remove_shelf(request,username,id):
     previous_url = request.META.get('HTTP_REFERER')
     user = CustomUser.objects.get(username = username)
@@ -88,7 +88,7 @@ def remove_shelf(request,username,id):
     messages.error(request, f"you can only remove from your shelf")
 
 
-@login_required
+@login_required(login_url='index')
 def remove_book(request,username,id):
     previous_url = request.META.get('HTTP_REFERER')
     user = CustomUser.objects.get(username = username)
@@ -144,7 +144,7 @@ def profile(request, username):
     return render(request, "pages/user/profile.html",context)
 
 
-@login_required
+@login_required(login_url='index')
 def wishlist(request,username):
     user = request.user
     favorite, created = Wishlist.objects.get_or_create(user=user)
@@ -163,7 +163,7 @@ def wishlist(request,username):
     }
     return render(request, "pages/user/wishlist.html",context)
 
-@login_required
+@login_required(login_url='index')
 def shelf(request,username):
     user = request.user
     favorite, created = Wishlist.objects.get_or_create(user=user)

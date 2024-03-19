@@ -278,7 +278,7 @@ def passwordResetConfirm(request, uidb64, token):
     return redirect("index")
 
 
-@login_required
+@login_required(login_url='index')
 def logout(request):
     auth_logout(request)
     messages.success(request, "Leaving so soon? Don't worry, we'll keep your virtual seat warm for when you decide to return! 👋😄")

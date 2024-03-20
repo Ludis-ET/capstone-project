@@ -56,3 +56,23 @@ class BookAdmin(admin.ModelAdmin):
     
 
 
+@admin.register(models.Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['book', 'user', 'rating', 'comment', 'date_rated']
+    search_fields = ['book__title', 'user__username', 'comment']
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if not request.user.is_superuser:
+            qs = qs.filter(book__author=request.user)
+        return qs
+
+    def has_change_permission(self, request, obj=None):
+        if obj is not None and obj.book.author != request.user and not request.user.is_superuser:
+            return False
+        return super().has_change_permission(request, obj)
+
+    def has_view_permission(self, request, obj=None):
+        if obj is not None and obj.book.author != request.user and not request.user.is_superuser:
+            return False
+        return super().has_view_permission(request, obj)

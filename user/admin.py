@@ -42,4 +42,20 @@ class UserAdmin(BaseUserAdmin):
 
 # admin.site.register(Shelf)
 # admin.site.register(Wishlist)
-admin.site.register(BorrowedBook)
+@admin.register(BorrowedBook)
+class ReviewAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if not request.user.is_superuser:
+            qs = qs.filter(book__author=request.user)
+        return qs
+
+    def has_change_permission(self, request, obj=None):
+        if obj is not None and obj.book.author != request.user and not request.user.is_superuser:
+            return False
+        return super().has_change_permission(request, obj)
+
+    def has_view_permission(self, request, obj=None):
+        if obj is not None and obj.book.author != request.user and not request.user.is_superuser:
+            return False
+        return super().has_view_permission(request, obj)

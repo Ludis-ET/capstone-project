@@ -67,7 +67,7 @@ def index(request):
 
 def activateEmail(request,user,to):
     mail_subject = "Activate Your Email Account"
-    message = render_to_string('email/activation.html', {
+    message = render_to_string('Email/activation.html', {
         'user': user,
         'domain': get_current_site(request).domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -231,7 +231,7 @@ def password_reset_request(request):
             associated_user = CustomUser.objects.filter(Q(email=user_email)).first()
             if associated_user:
                 mail_subject = "Password Reset Link"
-                message = render_to_string('email/reset.html', {
+                message = render_to_string('Email/reset.html', {
                     'user': associated_user,
                     'domain': get_current_site(request).domain,
                     'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)),
@@ -270,7 +270,7 @@ def passwordResetConfirm(request, uidb64, token):
                     for error in errors:
                         messages.error(request, f' {error}')
 
-        return render(request, 'pages/user/resetpassword.html',{})
+        return render(request, 'pages/User/resetpassword.html',{})
     else:
         messages.error(request, "Link is expired")
 

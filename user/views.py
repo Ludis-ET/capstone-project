@@ -141,7 +141,7 @@ def profile(request, username):
         'shelfs':shelfs,
         'my':av
     }
-    return render(request, "pages/user/profile.html",context)
+    return render(request, "pages/User/profile.html",context)
 
 
 @login_required(login_url='index')
@@ -161,7 +161,7 @@ def wishlist(request,username):
         'av':my
 
     }
-    return render(request, "pages/user/wishlist.html",context)
+    return render(request, "pages/User/wishlist.html",context)
 
 @login_required(login_url='index')
 def shelf(request,username):
@@ -175,4 +175,4 @@ def shelf(request,username):
         'shelf':shelf,
         'shelfs':shelfs
     }
-    return render(request, "pages/user/shelf.html",context)
+    return render(request, "pages/User/shelf.html",context)

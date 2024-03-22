@@ -8,7 +8,7 @@ admin.site.site_header = "Djabooks administration"
 admin.site.index_title = "Site administration"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin-ludis/', admin.site.urls),
     path('',include('core.urls')),
     path('<str:username>/',include('user.urls')),
 ] 

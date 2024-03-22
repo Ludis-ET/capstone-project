@@ -16,17 +16,17 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/media/(.*)",
       "dest": "/media/$1"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
     },
     {
       "src": "/(.*)",
       "dest": "bookStore/wsgi.py"
     }
-  ],
+],
   "outputDirectory": "ui/staticfiles"
 }

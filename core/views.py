@@ -180,7 +180,7 @@ def shelf(request):
         'rating_filter': rating_filter,
         'my':av,
     }
-    return render(request, "pages/shelf/shelf.html", context)
+    return render(request, "pages/Shelf/shelf.html", context)
 
 
 def book(request,id):
@@ -220,7 +220,7 @@ def book(request,id):
         'rec':recommended_books,
         'my':av
     }
-    return render(request, "pages/shelf/BookDetail.html",context)
+    return render(request, "pages/Shelf/BookDetail.html",context)
 
 
 def password_reset_request(request):
